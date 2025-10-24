@@ -1,6 +1,7 @@
 package dev.thomasglasser.mineraculouskamikotizations.world.item;
 
 import dev.thomasglasser.mineraculous.api.core.component.MineraculousDataComponents;
+import dev.thomasglasser.mineraculous.impl.world.item.component.Active;
 import dev.thomasglasser.mineraculouskamikotizations.MineraculousKamikotizations;
 import dev.thomasglasser.tommylib.api.registration.DeferredItem;
 import dev.thomasglasser.tommylib.api.registration.DeferredRegister;
@@ -19,7 +20,7 @@ public class MineraculousKamikotizationsItems {
     private static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(MineraculousKamikotizations.MOD_ID);
 
     // Parasols
-    private static final Supplier<Item.Properties> PARASOL_PROPERTIES = () -> new Item.Properties().stacksTo(1).component(MineraculousDataComponents.ACTIVE, false);
+    private static final Supplier<Item.Properties> PARASOL_PROPERTIES = () -> new Item.Properties().stacksTo(1).component(MineraculousDataComponents.ACTIVE, Active.DEFAULT);
     public static final Map<DyeColor, DeferredItem<?>> PARASOLS = parasols();
     public static final DeferredItem<WeatherControlParasolItem> WEATHER_CONTROL_PARASOL = ITEMS.register("weather_control_parasol", () -> new WeatherControlParasolItem(PARASOL_PROPERTIES.get()
             .attributes(ItemAttributeModifiers.builder()

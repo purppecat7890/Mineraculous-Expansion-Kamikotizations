@@ -55,7 +55,7 @@ public class GriefTrackingIceCharge extends IceCharge {
                     }
                 }
             }
-            AbilityReversionBlockData.get(level).putRevertible(ownerUuid, altered);
+            AbilityReversionBlockData.get(level).putRevertible(ownerUuid, level.dimension(), altered);
         }
         super.onHitEntity(result);
     }
@@ -77,7 +77,7 @@ public class GriefTrackingIceCharge extends IceCharge {
                     }
                 }
             }
-            AbilityReversionBlockData.get(level).putRevertible(ownerUuid, altered);
+            AbilityReversionBlockData.get(level).putRevertible(ownerUuid, level.dimension(), altered);
         }
         super.onHitBlock(result);
     }

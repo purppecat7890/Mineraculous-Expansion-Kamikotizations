@@ -1,7 +1,7 @@
 package dev.thomasglasser.mineraculouskamikotizations.data.modonomicons.mineraculous.wiki;
 
 import com.klikli_dev.modonomicon.api.datagen.AddToBookSubProvider;
-import dev.thomasglasser.mineraculous.impl.Mineraculous;
+import dev.thomasglasser.mineraculous.api.MineraculousConstants;
 import dev.thomasglasser.mineraculous.impl.data.modonomicons.wiki.WikiBookSubProvider;
 import dev.thomasglasser.mineraculouskamikotizations.MineraculousKamikotizations;
 import dev.thomasglasser.mineraculouskamikotizations.data.modonomicons.mineraculous.wiki.kamikotizations.AddToKamikotizationsCategoryProvider;
@@ -10,7 +10,7 @@ import net.minecraft.resources.ResourceLocation;
 
 public class AddToWikiBookSubProvider extends AddToBookSubProvider {
     public AddToWikiBookSubProvider(BiConsumer<String, String> defaultLang) {
-        super(Mineraculous.modLoc(WikiBookSubProvider.ID), defaultLang);
+        super(MineraculousConstants.modLoc(WikiBookSubProvider.ID), defaultLang);
     }
 
     // Unused in Index Mode

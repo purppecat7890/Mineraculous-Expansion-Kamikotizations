@@ -3,7 +3,7 @@
     "mineraculouskamikotizations:mineraculouskamikotizations"
   ],
   "minecraft:data_component_type": [
-    "mineraculouskamikotizations:weather_control_parasol_ability"
+    "mineraculouskamikotizations:weather_control_parasol_mode"
   ],
   "minecraft:entity_type": [
     "mineraculouskamikotizations:grief_tracking_ice_charge",

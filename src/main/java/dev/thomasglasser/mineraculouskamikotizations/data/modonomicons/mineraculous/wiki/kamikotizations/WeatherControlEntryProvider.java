@@ -49,7 +49,7 @@ public class WeatherControlEntryProvider extends IndexModeEntryProvider {
 
         add(context().pageTitle(), "Ice");
         add(context().pageText(), """
-                The Ice ability will fire Ice Charges that freeze entities and blocks that they hit.
+                The Ice mode will fire Ice Charges that freeze entities and blocks that they hit.
                 When frozen, entities will be captured in a prison of ice and will freeze to death.
                 """);
 
@@ -59,7 +59,7 @@ public class WeatherControlEntryProvider extends IndexModeEntryProvider {
 
         add(context().pageTitle(), "Lightning");
         add(context().pageText(), """
-                The Lightning ability will fire Lightning Bolts that will damage entities and blocks that they hit, lighting fires in the process.
+                The Lightning mode will fire Lightning Bolts that will damage entities and blocks that they hit, lighting fires in the process.
                 """);
 
         page("weather", () -> BookTextPageModel.create()
@@ -68,7 +68,7 @@ public class WeatherControlEntryProvider extends IndexModeEntryProvider {
 
         add(context().pageTitle(), "Weather");
         add(context().pageText(), """
-                The Weather ability will cycle the weather to rain, thunder, or clear.
+                The Weather mode will cycle the weather to rain, thunder, or clear.
                 """);
 
         page("wind", () -> BookTextPageModel.create()
@@ -77,7 +77,7 @@ public class WeatherControlEntryProvider extends IndexModeEntryProvider {
 
         add(context().pageTitle(), "Wind");
         add(context().pageText(), """
-                The Wind ability will fire Wind Charges that will push entities and blocks that they hit.
+                The Wind mode will fire Wind Charges that will push entities and blocks that they hit.
                 """);
     }
 

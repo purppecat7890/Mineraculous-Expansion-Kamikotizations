@@ -59,7 +59,7 @@ public class GriefTrackingLightningBolt extends LightningBolt {
                     alteredBlocks.put(mutable, blockstate);
                 }
             }
-            AbilityReversionBlockData.get(level).putRevertible(getCause().getUUID(), alteredBlocks);
+            AbilityReversionBlockData.get(level).putRevertible(getCause().getUUID(), level.dimension(), alteredBlocks);
         }
     }
 }

@@ -5,7 +5,7 @@ plugins {
 	id 'java-library'
 	id 'maven-publish'
 	id 'signing'
-	id 'dev.lukebemish.immaculate' version '0.1.8'
+	id 'dev.lukebemish.immaculate' version '0.1.+'
 	id 'idea'
 	id 'net.neoforged.moddev' version "${mdg_version}"
 }
@@ -164,8 +164,8 @@ dependencies {
 	implementation "com.klikli_dev:modonomicon-${minecraft_version}-neoforge:${modonomicon_version}"
 
 	// Runtime
-	localRuntime "maven.modrinth:jade:${jade_version}+neoforge"
-	localRuntime "mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}"
+    localRuntime "mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}"
+    localRuntime "maven.modrinth:jade:${jade_version}+neoforge"
 }
 
 var generateModMetadata = tasks.register("generateModMetadata", ProcessResources) {
@@ -181,7 +181,6 @@ var generateModMetadata = tasks.register("generateModMetadata", ProcessResources
 			description: project.description,
 			neoforge_version: neoforge_version,
 			major_fml_version: major_fml_version,
-			contributors: contributors,
 			java_version: java_version,
 			icon: icon,
 			github_name: github_name,
@@ -203,7 +202,8 @@ tasks.processResources.dependsOn generateModMetadata
 
 sourceSets.main.resources { srcDir 'src/generated/resources' }
 
-compileJava.dependsOn immaculateCheck
+compileJava.dependsOn immaculateApply
+compileJava.finalizedBy immaculateCheck
 
 immaculate {
 	workflows.register('java') {

@@ -2,6 +2,7 @@ package dev.thomasglasser.mineraculouskamikotizations.world.level.storage;
 
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.datafix.DataFixTypes;
 import net.minecraft.world.level.saveddata.SavedData;
 
@@ -9,6 +10,10 @@ public class KamikotizationData extends SavedData {
     public static final String FILE_ID = "kamikotization";
 
     private boolean weatherModified = false;
+
+    public static KamikotizationData get(ServerLevel level) {
+        return level.getServer().overworld().getDataStorage().computeIfAbsent(KamikotizationData.factory(), KamikotizationData.FILE_ID);
+    }
 
     public static Factory<KamikotizationData> factory() {
         return new Factory<>(KamikotizationData::new, (p_294039_, p_324123_) -> load(p_294039_), DataFixTypes.LEVEL);

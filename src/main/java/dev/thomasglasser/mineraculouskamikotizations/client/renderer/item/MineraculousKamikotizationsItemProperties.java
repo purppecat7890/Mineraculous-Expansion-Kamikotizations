@@ -7,6 +7,6 @@ import net.minecraft.client.renderer.item.ItemProperties;
 
 public class MineraculousKamikotizationsItemProperties {
     public static void init() {
-        ItemProperties.register(MineraculousKamikotizationsItems.WEATHER_CONTROL_PARASOL.get(), MineraculousItemProperties.ABILITY, MineraculousItemProperties.getEnumPropertyFunction(MineraculousKamikotizationsDataComponents.WEATHER_CONTROL_PARASOL_ABILITY.get()));
+        ItemProperties.register(MineraculousKamikotizationsItems.WEATHER_CONTROL_PARASOL.get(), MineraculousItemProperties.MODE, MineraculousItemProperties.getEnumPropertyFunction(MineraculousKamikotizationsDataComponents.WEATHER_CONTROL_PARASOL_MODE.get()));
     }
 }

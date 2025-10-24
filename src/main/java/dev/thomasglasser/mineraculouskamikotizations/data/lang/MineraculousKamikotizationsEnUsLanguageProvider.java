@@ -31,10 +31,10 @@ public class MineraculousKamikotizationsEnUsLanguageProvider extends Mineraculou
 
         // Kamikotization Tools
         add(MineraculousKamikotizationsItems.WEATHER_CONTROL_PARASOL.get(), "Weather Control Parasol");
-        add(WeatherControlParasolItem.Ability.ICE, "Ice");
-        add(WeatherControlParasolItem.Ability.LIGHTNING, "Lightning");
-        add(WeatherControlParasolItem.Ability.WEATHER, "Weather");
-        add(WeatherControlParasolItem.Ability.WIND, "Wind");
+        add(WeatherControlParasolItem.Mode.ICE, "Ice");
+        add(WeatherControlParasolItem.Mode.LIGHTNING, "Lightning");
+        add(WeatherControlParasolItem.Mode.WEATHER, "Weather");
+        add(WeatherControlParasolItem.Mode.WIND, "Wind");
     }
 
     protected void addEntities() {
