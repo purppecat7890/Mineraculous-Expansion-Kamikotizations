@@ -1,0 +1,14 @@
+{
+  "parent": "minecraft:item/handheld",
+  "overrides": [
+    {
+      "model": "mineraculouskamikotizations:item/yellow_parasol_open",
+      "predicate": {
+        "mineraculous:active": 1.0
+      }
+    }
+  ],
+  "textures": {
+    "layer0": "minecraft:item/apple"
+  }
+}

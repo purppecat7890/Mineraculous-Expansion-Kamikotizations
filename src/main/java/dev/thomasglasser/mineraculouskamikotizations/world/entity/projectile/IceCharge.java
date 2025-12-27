@@ -1,8 +1,8 @@
 package dev.thomasglasser.mineraculouskamikotizations.world.entity.projectile;
 
 import dev.thomasglasser.mineraculouskamikotizations.world.entity.MineraculousKamikotizationsEntityTypes;
-import java.util.ArrayList;
-import java.util.List;
+import it.unimi.dsi.fastutil.objects.ReferenceOpenHashSet;
+import java.util.Set;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
@@ -34,15 +34,17 @@ public class IceCharge extends AbstractHurtingProjectile implements ItemSupplier
         this.accelerationPower = 0.0;
     }
 
-    public IceCharge(
-            Level level, Entity owner, double x, double y, double z) {
-        super(MineraculousKamikotizationsEntityTypes.ICE_CHARGE.get(), x, y, z, level);
+    public IceCharge(EntityType<? extends IceCharge> entityType, Entity owner, double x, double y, double z, Level level) {
+        super(entityType, x, y, z, level);
         this.setOwner(owner);
         this.accelerationPower = 0.0;
     }
 
-    IceCharge(
-            double x, double y, double z, Vec3 movement, Level level) {
+    public IceCharge(Entity owner, double x, double y, double z, Level level) {
+        this(MineraculousKamikotizationsEntityTypes.ICE_CHARGE.get(), owner, x, y, z, level);
+    }
+
+    public IceCharge(double x, double y, double z, Vec3 movement, Level level) {
         super(MineraculousKamikotizationsEntityTypes.ICE_CHARGE.get(), x, y, z, movement, level);
         this.accelerationPower = 0.0;
     }
@@ -51,7 +53,6 @@ public class IceCharge extends AbstractHurtingProjectile implements ItemSupplier
     protected AABB makeBoundingBox() {
         float f = this.getType().getDimensions().width() / 2.0F;
         float f1 = this.getType().getDimensions().height();
-        float f2 = 0.15F;
         return new AABB(
                 this.position().x - (double) f,
                 this.position().y - 0.15F,
@@ -63,7 +64,7 @@ public class IceCharge extends AbstractHurtingProjectile implements ItemSupplier
 
     @Override
     public boolean canCollideWith(Entity entity) {
-        return entity instanceof IceCharge ? false : super.canCollideWith(entity);
+        return !(entity instanceof IceCharge) && super.canCollideWith(entity);
     }
 
     @Override
@@ -71,7 +72,7 @@ public class IceCharge extends AbstractHurtingProjectile implements ItemSupplier
         if (target instanceof IceCharge) {
             return false;
         } else {
-            return target.getType() == EntityType.END_CRYSTAL ? false : super.canHitEntity(target);
+            return target.getType() != EntityType.END_CRYSTAL && super.canHitEntity(target);
         }
     }
 
@@ -93,7 +94,7 @@ public class IceCharge extends AbstractHurtingProjectile implements ItemSupplier
             entity.setTicksFrozen(Integer.MAX_VALUE);
             entity.moveTo(entity.blockPosition().getBottomCenter());
             entity.setDeltaMovement(0, 0, 0);
-            List<BlockPos> inside = getInsidePos(entity);
+            Set<BlockPos> inside = getInsidePos(entity);
             int blocksWide = Mth.ceil(entity.getBbWidth());
             int blocksHigh = Mth.ceil(entity.getBbHeight());
             for (int i = -blocksWide; i <= blocksWide; i++) {
@@ -110,17 +111,13 @@ public class IceCharge extends AbstractHurtingProjectile implements ItemSupplier
         }
     }
 
-    public static List<BlockPos> getInsidePos(Entity target) {
+    public static Set<BlockPos> getInsidePos(Entity target) {
         AABB aabb = target.getBoundingBox();
         BlockPos startPos = BlockPos.containing(aabb.minX + 1.0E-7, aabb.minY + 1.0E-7, aabb.minZ + 1.0E-7);
         BlockPos endPos = BlockPos.containing(aabb.maxX - 1.0E-7, aabb.maxY - 1.0E-7, aabb.maxZ - 1.0E-7);
-        List<BlockPos> inside = new ArrayList<>();
-        for (int i = startPos.getX(); i <= endPos.getX(); i++) {
-            for (int j = startPos.getY(); j <= endPos.getY(); j++) {
-                for (int k = startPos.getZ(); k <= endPos.getZ(); k++) {
-                    inside.add(new BlockPos(i, j, k));
-                }
-            }
+        Set<BlockPos> inside = new ReferenceOpenHashSet<>();
+        for (BlockPos pos : BlockPos.betweenClosed(startPos, endPos)) {
+            inside.add(pos);
         }
         return inside;
     }

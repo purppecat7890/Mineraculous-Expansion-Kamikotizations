@@ -3,9 +3,13 @@
     "mineraculouskamikotizations:mineraculouskamikotizations"
   ],
   "minecraft:data_component_type": [
-    "mineraculouskamikotizations:weather_control_parasol_ability"
+    "mineraculouskamikotizations:weather_control_parasol_mode"
   ],
   "minecraft:entity_type": [
+    "mineraculouskamikotizations:bubble_prison",
+    "mineraculouskamikotizations:grief_tracking_ice_charge",
+    "mineraculouskamikotizations:grief_tracking_lightning_bolt",
+    "mineraculouskamikotizations:grief_tracking_wind_charge",
     "mineraculouskamikotizations:ice_charge"
   ],
   "minecraft:item": [

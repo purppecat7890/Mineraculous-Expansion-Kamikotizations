@@ -2,13 +2,12 @@ package dev.thomasglasser.mineraculouskamikotizations.world.item;
 
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
-import dev.thomasglasser.mineraculous.core.component.MineraculousDataComponents;
-import dev.thomasglasser.mineraculous.world.entity.kamikotization.Kamikotization;
-import dev.thomasglasser.mineraculous.world.item.armor.MineraculousArmors;
+import dev.thomasglasser.mineraculous.api.core.component.MineraculousDataComponents;
+import dev.thomasglasser.mineraculous.api.world.item.armor.MineraculousArmors;
+import dev.thomasglasser.mineraculous.api.world.kamikotization.Kamikotization;
 import dev.thomasglasser.mineraculouskamikotizations.MineraculousKamikotizations;
 import dev.thomasglasser.mineraculouskamikotizations.world.entity.kamikotization.MineraculousKamikotizationsKamikotizations;
 import net.minecraft.core.Holder;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ai.attributes.Attribute;
@@ -31,8 +30,9 @@ public class BubbleSwordItem extends Item implements ICurioItem {
     @Override
     public boolean canEquip(SlotContext slotContext, ItemStack stack) {
         ItemStack chestplate = slotContext.entity().getItemBySlot(EquipmentSlot.CHEST);
-        ResourceKey<Kamikotization> kamikotization = chestplate.get(MineraculousDataComponents.KAMIKOTIZATION);
-        return chestplate.is(MineraculousArmors.KAMIKOTIZATION.CHEST) && kamikotization != null && kamikotization == MineraculousKamikotizationsKamikotizations.BUBBLE_CAPTURE;
+        Holder<Kamikotization> kamikotization = chestplate.get(MineraculousDataComponents.KAMIKOTIZATION);
+        // TODO: Switch to tag
+        return chestplate.is(MineraculousArmors.KAMIKOTIZATION.chest()) && kamikotization != null && kamikotization.is(MineraculousKamikotizationsKamikotizations.BUBBLE_CAPTURE);
     }
 
     @Override

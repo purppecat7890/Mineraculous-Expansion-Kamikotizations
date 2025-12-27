@@ -1,0 +1,86 @@
+{
+  "background_u_index": 0,
+  "background_v_index": 0,
+  "category": "kamikotizations",
+  "description": "book.mineraculous.wiki.kamikotizations.weather_control.description",
+  "hide_while_locked": false,
+  "icon": {
+    "item": "mineraculouskamikotizations:weather_control_parasol"
+  },
+  "name": "book.mineraculous.wiki.kamikotizations.weather_control.name",
+  "pages": [
+    {
+      "type": "modonomicon:image",
+      "anchor": "",
+      "border": true,
+      "condition": {
+        "type": "modonomicon:none"
+      },
+      "images": [
+        "mineraculouskamikotizations:textures/modonomicon/wiki/kamikotizations/weather_control/receiving.png"
+      ],
+      "text": "book.mineraculous.wiki.kamikotizations.weather_control.receiving.text",
+      "title": "book.mineraculous.wiki.kamikotizations.weather_control.receiving.title",
+      "use_legacy_rendering": false
+    },
+    {
+      "type": "modonomicon:text",
+      "anchor": "",
+      "condition": {
+        "type": "modonomicon:none"
+      },
+      "show_title_separator": true,
+      "text": "book.mineraculous.wiki.kamikotizations.weather_control.tool.text",
+      "title": "book.mineraculous.wiki.kamikotizations.weather_control.tool.title",
+      "use_markdown_in_title": false
+    },
+    {
+      "type": "modonomicon:text",
+      "anchor": "",
+      "condition": {
+        "type": "modonomicon:none"
+      },
+      "show_title_separator": true,
+      "text": "book.mineraculous.wiki.kamikotizations.weather_control.ice.text",
+      "title": "book.mineraculous.wiki.kamikotizations.weather_control.ice.title",
+      "use_markdown_in_title": false
+    },
+    {
+      "type": "modonomicon:text",
+      "anchor": "",
+      "condition": {
+        "type": "modonomicon:none"
+      },
+      "show_title_separator": true,
+      "text": "book.mineraculous.wiki.kamikotizations.weather_control.lightning.text",
+      "title": "book.mineraculous.wiki.kamikotizations.weather_control.lightning.title",
+      "use_markdown_in_title": false
+    },
+    {
+      "type": "modonomicon:text",
+      "anchor": "",
+      "condition": {
+        "type": "modonomicon:none"
+      },
+      "show_title_separator": true,
+      "text": "book.mineraculous.wiki.kamikotizations.weather_control.weather.text",
+      "title": "book.mineraculous.wiki.kamikotizations.weather_control.weather.title",
+      "use_markdown_in_title": false
+    },
+    {
+      "type": "modonomicon:text",
+      "anchor": "",
+      "condition": {
+        "type": "modonomicon:none"
+      },
+      "show_title_separator": true,
+      "text": "book.mineraculous.wiki.kamikotizations.weather_control.wind.text",
+      "title": "book.mineraculous.wiki.kamikotizations.weather_control.wind.title",
+      "use_markdown_in_title": false
+    }
+  ],
+  "show_when_any_parent_unlocked": false,
+  "sort_number": 0,
+  "x": 0,
+  "y": 0
+}

@@ -1,7 +1,7 @@
 package dev.thomasglasser.mineraculouskamikotizations.data.datamaps;
 
-import dev.thomasglasser.mineraculous.datamaps.LuckyCharms;
-import dev.thomasglasser.mineraculous.datamaps.MineraculousDataMaps;
+import dev.thomasglasser.mineraculous.api.datamaps.LuckyCharms;
+import dev.thomasglasser.mineraculous.api.datamaps.MineraculousDataMaps;
 import dev.thomasglasser.mineraculouskamikotizations.world.entity.kamikotization.MineraculousKamikotizationsKamikotizations;
 import dev.thomasglasser.mineraculouskamikotizations.world.level.storage.loot.MineraculousKamikotizationsLuckyCharmLootKeys;
 import java.util.concurrent.CompletableFuture;
@@ -15,7 +15,7 @@ public class MineraculousKamikotizationsDataMapProvider extends DataMapProvider 
     }
 
     @Override
-    protected void gather() {
+    protected void gather(HolderLookup.Provider provider) {
         builder(MineraculousDataMaps.KAMIKOTIZATION_LUCKY_CHARMS)
                 .add(MineraculousKamikotizationsKamikotizations.WEATHER_CONTROL, new LuckyCharms(MineraculousKamikotizationsLuckyCharmLootKeys.WEATHER_CONTROL), false)
                 .build();

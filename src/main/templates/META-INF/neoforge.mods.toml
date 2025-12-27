@@ -9,7 +9,6 @@ displayName="${mod_name}"
 updateJSONURL = "https://api.modrinth.com/updates/${mod_id}/forge_updates.json?neoforge=include"
 displayURL="https://github.com/thomasglasser/${github_name}/wiki"
 logoFile="${icon}"
-credits="${contributors}"
 authors="${mod_author}"
 description='''
 ${description}
@@ -30,6 +29,8 @@ type="required"
 versionRange="[${minecraft_version},${next_minecraft_version})"
 ordering="NONE"
 side="BOTH"
+
+# Required Dependencies
 [[dependencies.${mod_id}]]
 modId="tommylib"
 type="required"
@@ -40,5 +41,11 @@ side="BOTH"
 modId="mineraculous"
 type="required"
 versionRange="[${mineraculous_version},)"
+ordering="AFTER"
+side="BOTH"
+[[dependencies.${mod_id}]]
+modId="curios"
+type="required"
+versionRange="[${curios_version},)"
 ordering="NONE"
 side="BOTH"

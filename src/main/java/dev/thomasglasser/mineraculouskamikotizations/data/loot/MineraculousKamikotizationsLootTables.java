@@ -1,6 +1,6 @@
 package dev.thomasglasser.mineraculouskamikotizations.data.loot;
 
-import dev.thomasglasser.mineraculous.world.level.storage.loot.parameters.MineraculousLootContextParamSets;
+import dev.thomasglasser.mineraculous.api.world.level.storage.loot.parameters.MineraculousLootContextParamSets;
 import dev.thomasglasser.tommylib.api.data.loot.ExtendedLootTableProvider;
 import java.util.List;
 import java.util.Set;

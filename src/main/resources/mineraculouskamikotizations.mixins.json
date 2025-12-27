@@ -1,7 +1,7 @@
 {
   "required": true,
   "minVersion": "0.8",
-  "package": "${group}.mixin",
+  "package": "dev.thomasglasser.mineraculouskamikotizations.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
   ],

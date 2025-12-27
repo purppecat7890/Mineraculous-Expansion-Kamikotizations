@@ -1,6 +1,6 @@
 package dev.thomasglasser.mineraculouskamikotizations.data.tags;
 
-import dev.thomasglasser.mineraculous.world.damagesource.MineraculousDamageTypes;
+import dev.thomasglasser.mineraculous.api.world.damagesource.MineraculousDamageTypes;
 import dev.thomasglasser.mineraculouskamikotizations.MineraculousKamikotizations;
 import dev.thomasglasser.mineraculouskamikotizations.tags.MineraculousKamikotizationsDamageTypeTags;
 import dev.thomasglasser.tommylib.api.data.tags.ExtendedTagsProvider;

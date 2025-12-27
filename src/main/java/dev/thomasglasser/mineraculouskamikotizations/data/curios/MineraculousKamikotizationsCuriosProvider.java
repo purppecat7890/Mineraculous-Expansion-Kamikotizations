@@ -10,7 +10,7 @@ import top.theillusivec4.curios.api.CuriosDataProvider;
 public class MineraculousKamikotizationsCuriosProvider extends CuriosDataProvider {
     public static final String SLOT_BACK = "back";
 
-    public MineraculousKamikotizationsCuriosProvider(PackOutput output, ExistingFileHelper fileHelper, CompletableFuture<HolderLookup.Provider> registries) {
+    public MineraculousKamikotizationsCuriosProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> registries, ExistingFileHelper fileHelper) {
         super(MineraculousKamikotizations.MOD_ID, output, fileHelper, registries);
     }
 

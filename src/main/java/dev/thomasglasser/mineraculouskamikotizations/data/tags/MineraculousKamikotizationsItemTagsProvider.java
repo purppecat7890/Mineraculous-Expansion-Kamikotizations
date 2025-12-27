@@ -1,6 +1,6 @@
 package dev.thomasglasser.mineraculouskamikotizations.data.tags;
 
-import dev.thomasglasser.mineraculous.Mineraculous;
+import dev.thomasglasser.mineraculous.api.MineraculousConstants;
 import dev.thomasglasser.mineraculouskamikotizations.MineraculousKamikotizations;
 import dev.thomasglasser.mineraculouskamikotizations.data.curios.MineraculousKamikotizationsCuriosProvider;
 import dev.thomasglasser.mineraculouskamikotizations.tags.MineraculousKamikotizationsItemTags;
@@ -24,12 +24,14 @@ public class MineraculousKamikotizationsItemTagsProvider extends ExtendedItemTag
 
     @Override
     protected void addTags(HolderLookup.Provider provider) {
+        // Mod Specific
         tag(MineraculousKamikotizationsItemTags.PARASOLS)
-                .add(MineraculousKamikotizationsItems.PARASOLS.values().stream().map(DeferredItem::get).toArray(Item[]::new));
+                .add(MineraculousKamikotizationsItems.PARASOLS.values().toArray(new DeferredItem[0]));
 
         tag(MineraculousKamikotizationsItemTags.BUBBLE_WANDS)
-                .add(MineraculousKamikotizationsItems.BUBBLE_WANDS.values().stream().map(DeferredItem::get).toArray(Item[]::new));
+                .add(MineraculousKamikotizationsItems.BUBBLE_WANDS.values().toArray(new DeferredItem[0]));
 
+        // Common
         tag(MineraculousKamikotizationsItemTags.UMBRELLA_TOOLS)
                 .addTag(MineraculousKamikotizationsItemTags.PARASOLS)
                 .add(MineraculousKamikotizationsItems.WEATHER_CONTROL_PARASOL.get());
@@ -42,7 +44,7 @@ public class MineraculousKamikotizationsItemTagsProvider extends ExtendedItemTag
     }
 
     protected void curios(String slot, Item... items) {
-        IntrinsicTagAppender<Item> curios = tag(TagKey.create(Registries.ITEM, Mineraculous.Dependencies.CURIOS.modLoc(slot)));
+        IntrinsicTagAppender<Item> curios = tag(TagKey.create(Registries.ITEM, MineraculousConstants.Dependencies.CURIOS.modLoc(slot)));
 
         for (Item item : items) {
             curios.add(item);

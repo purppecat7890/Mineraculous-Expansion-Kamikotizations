@@ -1,6 +1,7 @@
 package dev.thomasglasser.mineraculouskamikotizations.data.models;
 
-import dev.thomasglasser.mineraculous.world.item.MineraculousItemDisplayContexts;
+import dev.thomasglasser.mineraculous.api.client.renderer.item.MineraculousItemProperties;
+import dev.thomasglasser.mineraculous.api.world.item.MineraculousItemDisplayContexts;
 import dev.thomasglasser.mineraculouskamikotizations.MineraculousKamikotizations;
 import dev.thomasglasser.mineraculouskamikotizations.world.item.MineraculousKamikotizationsItems;
 import dev.thomasglasser.tommylib.api.data.models.ExtendedItemModelProvider;
@@ -19,7 +20,11 @@ public class MineraculousKamikotizationsItemModelProvider extends ExtendedItemMo
     @Override
     protected void registerModels() {
         for (DyeColor color : DyeColor.values()) {
-            // TODO: Parasols
+            singleTexture(MineraculousKamikotizationsItems.PARASOLS.get(color).getId().getPath(), mcItemLoc("handheld"), "layer0", mcItemLoc("apple"))
+                    .override()
+                    .predicate(MineraculousItemProperties.ACTIVE, 1)
+                    .model(singleTexture(MineraculousKamikotizationsItems.PARASOLS.get(color).getId().getPath() + "_open", mcItemLoc("handheld"), "layer0", mcItemLoc("bread")))
+                    .end();
             basicItem(MineraculousKamikotizationsItems.BUBBLE_WANDS.get(color).get());
         }
 
@@ -28,7 +33,7 @@ public class MineraculousKamikotizationsItemModelProvider extends ExtendedItemMo
         ItemModelBuilder onBackBubbleSword = withExistingParent("item/bubble_sword_on_back", modItemLoc("bubble_sword_in_hand"))
                 .texture("texture", modItemLoc("bubble_sword_on_back"))
                 .transforms()
-                .transform(MineraculousItemDisplayContexts.CURIOS_OTHER.getValue())
+                .transform(MineraculousItemDisplayContexts.CURIOS_BODY.getValue())
                 .translation(0, -2.5F, 4.5F)
                 .end()
                 .end();
@@ -40,6 +45,6 @@ public class MineraculousKamikotizationsItemModelProvider extends ExtendedItemMo
                 .perspective(ItemDisplayContext.GUI, inventoryBubbleSword)
                 .perspective(ItemDisplayContext.FIXED, inventoryBubbleSword)
                 .perspective(ItemDisplayContext.GROUND, inventoryBubbleSword)
-                .perspective(MineraculousItemDisplayContexts.CURIOS_OTHER.getValue(), onBackBubbleSword);
+                .perspective(MineraculousItemDisplayContexts.CURIOS_BODY.getValue(), onBackBubbleSword);
     }
 }

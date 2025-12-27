@@ -1,12 +1,8 @@
 package dev.thomasglasser.mineraculouskamikotizations;
 
-import dev.thomasglasser.mineraculouskamikotizations.client.MineraculousKamikotizationsClientEvents;
-import dev.thomasglasser.mineraculouskamikotizations.client.MineraculousKamikotizationsKeyMappings;
 import dev.thomasglasser.mineraculouskamikotizations.core.component.MineraculousKamikotizationsDataComponents;
 import dev.thomasglasser.mineraculouskamikotizations.core.particles.MineraculousKamikotizationsParticleTypes;
 import dev.thomasglasser.mineraculouskamikotizations.data.MineraculousKamikotizationsDataGenerators;
-import dev.thomasglasser.mineraculouskamikotizations.network.MineraculousKamikotizationsPayloads;
-import dev.thomasglasser.mineraculouskamikotizations.world.attachment.MineraculousKamikotizationsAttachmentTypes;
 import dev.thomasglasser.mineraculouskamikotizations.world.entity.MineraculousKamikotizationsEntityEvents;
 import dev.thomasglasser.mineraculouskamikotizations.world.entity.MineraculousKamikotizationsEntityTypes;
 import dev.thomasglasser.mineraculouskamikotizations.world.item.MineraculousKamikotizationsCreativeModeTabs;
@@ -28,27 +24,17 @@ public class MineraculousKamikotizations {
     public MineraculousKamikotizations(IEventBus bus) {
         LOGGER.info("Initializing {} for {} in a {} environment...", MOD_NAME, TommyLibServices.PLATFORM.getPlatformName(), TommyLibServices.PLATFORM.getEnvironmentName());
 
+        MineraculousKamikotizationsEntityTypes.init();
         MineraculousKamikotizationsDataComponents.init();
         MineraculousKamikotizationsItems.init();
-        MineraculousKamikotizationsAttachmentTypes.init();
         MineraculousKamikotizationsCreativeModeTabs.init();
+        MineraculousKamikotizationsDataComponents.init();
         MineraculousKamikotizationsEntityTypes.init();
         MineraculousKamikotizationsParticleTypes.init();
 
         bus.addListener(MineraculousKamikotizationsDataGenerators::onGatherData);
 
-        bus.addListener(MineraculousKamikotizationsPayloads::onRegisterPackets);
-
         NeoForge.EVENT_BUS.addListener(MineraculousKamikotizationsEntityEvents::onEntityMount);
-
-        if (TommyLibServices.PLATFORM.isClientSide()) {
-            MineraculousKamikotizationsKeyMappings.init();
-
-            bus.addListener(MineraculousKamikotizationsClientEvents::onFMLClientSetup);
-            bus.addListener(MineraculousKamikotizationsClientEvents::onBuildCreativeModeTabContents);
-            bus.addListener(MineraculousKamikotizationsClientEvents::onRegisterRenderer);
-            bus.addListener(MineraculousKamikotizationsClientEvents::onRegisterParticleProviders);
-        }
     }
 
     public static ResourceLocation modLoc(String path) {

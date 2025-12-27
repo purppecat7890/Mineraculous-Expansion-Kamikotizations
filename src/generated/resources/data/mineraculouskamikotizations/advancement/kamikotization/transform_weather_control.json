@@ -3,7 +3,7 @@
   "criteria": {
     "transform_weather_control": {
       "conditions": {
-        "type": "mineraculouskamikotizations:weather_control"
+        "kamikotization": "mineraculouskamikotizations:weather_control"
       },
       "trigger": "mineraculous:transformed_kamikotization"
     }

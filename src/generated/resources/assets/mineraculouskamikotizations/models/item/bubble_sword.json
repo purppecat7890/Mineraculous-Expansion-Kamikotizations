@@ -2,6 +2,7 @@
   "base": {
     "parent": "mineraculouskamikotizations:item/bubble_sword_in_hand"
   },
+  "gui_light": "front",
   "loader": "neoforge:separate_transforms",
   "perspectives": {
     "fixed": {
@@ -25,10 +26,10 @@
         "layer0": "mineraculouskamikotizations:item/bubble_sword_inventory"
       }
     },
-    "mineraculous:curios_other": {
+    "mineraculous:curios_body": {
       "parent": "mineraculouskamikotizations:item/bubble_sword_in_hand",
       "display": {
-        "mineraculous:curios_other": {
+        "mineraculous:curios_body": {
           "translation": [
             0,
             -2.5,
