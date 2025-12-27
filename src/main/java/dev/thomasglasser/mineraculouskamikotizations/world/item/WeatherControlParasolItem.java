@@ -5,10 +5,8 @@ import dev.thomasglasser.mineraculous.api.client.gui.screens.RadialMenuOption;
 import dev.thomasglasser.mineraculous.api.world.attachment.MineraculousAttachmentTypes;
 import dev.thomasglasser.mineraculous.api.world.item.EffectRevertingItem;
 import dev.thomasglasser.mineraculous.api.world.item.RadialMenuProvider;
-import dev.thomasglasser.mineraculous.api.world.level.storage.AbilityReversionBlockData;
-import dev.thomasglasser.mineraculous.api.world.level.storage.AbilityReversionEntityData;
-import dev.thomasglasser.mineraculous.api.world.level.storage.AbilityReversionItemData;
 import dev.thomasglasser.mineraculous.api.world.miraculous.Miraculouses;
+import dev.thomasglasser.mineraculous.impl.world.level.miraculousladybugtarget.MiraculousLadybugTargetCollector;
 import dev.thomasglasser.mineraculouskamikotizations.core.component.MineraculousKamikotizationsDataComponents;
 import dev.thomasglasser.mineraculouskamikotizations.world.entity.MineraculousKamikotizationsEntityTypes;
 import dev.thomasglasser.mineraculouskamikotizations.world.entity.grieftracking.GriefTrackingIceCharge;
@@ -103,12 +101,8 @@ public class WeatherControlParasolItem extends Item implements EffectRevertingIt
     }
 
     @Override
-    public void revert(LivingEntity entity) {
-        ServerLevel level = (ServerLevel) entity.level();
-        AbilityReversionBlockData.get(level).revert(entity.getUUID(), (ServerLevel) entity.level());
-        AbilityReversionItemData.get(level).markReverted(entity.getUUID());
-        AbilityReversionEntityData.get(level).revert(entity.getUUID(), (ServerLevel) entity.level(), e -> e.setTicksFrozen(0));
-        KamikotizationData overworldData = KamikotizationData.get(level);
+    public void revert(LivingEntity entity, MiraculousLadybugTargetCollector targetCollector) {
+        KamikotizationData overworldData = KamikotizationData.get((ServerLevel) entity.level());
         if (overworldData.wasWeatherModified()) {
             entity.getServer().overworld().resetWeatherCycle();
             overworldData.setWeatherModified(false);

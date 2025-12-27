@@ -1,6 +1,6 @@
 package dev.thomasglasser.mineraculouskamikotizations.world.entity.grieftracking;
 
-import dev.thomasglasser.mineraculous.api.world.level.storage.AbilityReversionEntityData;
+import dev.thomasglasser.mineraculous.api.world.level.storage.EntityReversionData;
 import dev.thomasglasser.mineraculouskamikotizations.world.entity.MineraculousKamikotizationsEntityTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.EntityType;
@@ -34,7 +34,7 @@ public class GriefTrackingWindCharge extends WindCharge {
     @Override
     protected void onHitEntity(EntityHitResult result) {
         if (level() instanceof ServerLevel level && getOwner() != null) {
-            AbilityReversionEntityData.get(level).putRevertible(getOwner().getUUID(), result.getEntity());
+            EntityReversionData.get(level).putRevertible(getOwner().getUUID(), result.getEntity());
         }
         super.onHitEntity(result);
     }

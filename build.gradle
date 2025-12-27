@@ -82,6 +82,24 @@ repositories {
 		}
 		filter { includeGroupAndSubgroups "com.klikli_dev" }
 	}
+	exclusiveContent {
+		forRepository {
+			maven {
+				name = 'Voice Chat API'
+				url = 'https://maven.maxhenkel.de/repository/public'
+			}
+		}
+		filter { includeGroupAndSubgroups "de.maxhenkel.voicechat" }
+	}
+	exclusiveContent {
+		forRepository {
+			maven {
+				name = 'Sherds API'
+				url = 'https://dl.cloudsmith.io/public/thomasglasser/sherdsapi/maven/'
+			}
+		}
+		filter { includeGroupAndSubgroups "dev.thomasglasser.sherdsapi" }
+	}
 	maven {
 		name = 'Mineraculous'
 		url = 'https://dl.cloudsmith.io/public/thomasglasser/mineraculous/maven/'
@@ -131,6 +149,18 @@ neoForge {
 			gameDirectory = project.layout.projectDirectory.dir('runs/client_alt')
 			programArguments.addAll "--username", "DevAlt"
 		}
+		client_alt_alt {
+			client()
+			ideName = "Client 3"
+			gameDirectory = project.layout.projectDirectory.dir('runs/client_alt_alt')
+			programArguments.addAll "--username", "DevAltAlt"
+		}
+		auth_client {
+			client()
+			ideName = "Auth Client"
+			devLogin = true
+			gameDirectory = project.layout.projectDirectory.dir('runs/auth_client')
+		}
 		server {
 			server()
 			ideName = "Server"
@@ -159,13 +189,12 @@ dependencies {
 	jarJar implementation("dev.thomasglasser.tommylib:tommylib-neoforge-${minecraft_version}:${tommylib_version}")
 
 	implementation "dev.thomasglasser.mineraculous:mineraculous-${minecraft_version}:${mineraculous_version}"
-	implementation "net.tslat.smartbrainlib:SmartBrainLib-neoforge-${minecraft_version}:${smartbrainlib_version}"
 
 	implementation "com.klikli_dev:modonomicon-${minecraft_version}-neoforge:${modonomicon_version}"
+	implementation "maven.modrinth:jade:${jade_version}+neoforge"
 
 	// Runtime
     localRuntime "mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}"
-    localRuntime "maven.modrinth:jade:${jade_version}+neoforge"
 }
 
 var generateModMetadata = tasks.register("generateModMetadata", ProcessResources) {
@@ -219,7 +248,6 @@ immaculate {
 			version '3.37.0'
 			config = rootProject.file('codeformat/formatter-config.xml')
 		}
-
 
 		// courtesy of diffplug/spotless#240
 		// https://github.com/diffplug/spotless/issues/240#issuecomment-385206606

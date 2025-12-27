@@ -1,11 +1,11 @@
 package dev.thomasglasser.mineraculouskamikotizations.world.entity.grieftracking;
 
-import dev.thomasglasser.mineraculous.api.world.level.storage.AbilityReversionBlockData;
-import dev.thomasglasser.mineraculous.api.world.level.storage.AbilityReversionEntityData;
-import it.unimi.dsi.fastutil.objects.Reference2ReferenceOpenHashMap;
+import dev.thomasglasser.mineraculous.api.world.level.storage.BlockReversionData;
+import dev.thomasglasser.mineraculous.api.world.level.storage.EntityReversionData;
 import java.util.List;
-import java.util.Map;
+import java.util.UUID;
 import net.minecraft.core.BlockPos;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -15,7 +15,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseFireBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
-import net.tslat.smartbrainlib.util.EntityRetrievalUtil;
 
 public class GriefTrackingLightningBolt extends LightningBolt {
     public GriefTrackingLightningBolt(EntityType<? extends LightningBolt> entityType, Level level) {
@@ -25,12 +24,16 @@ public class GriefTrackingLightningBolt extends LightningBolt {
     @Override
     public void tick() {
         if (!visualOnly && level() instanceof ServerLevel level && getCause() != null) {
-            List<Entity> hit = EntityRetrievalUtil.getEntities(
-                    level(),
-                    new AABB(this.getX() - 3.0, this.getY() - 3.0, this.getZ() - 3.0, this.getX() + 3.0, this.getY() + 6.0 + 3.0, this.getZ() + 3.0),
-                    Entity::isAlive);
-            for (Entity entity : hit)
-                AbilityReversionEntityData.get(level).putRevertible(getCause().getUUID(), entity);
+            List<Entity> hit = level
+                    .getEntities(
+                            this,
+                            new AABB(this.getX() - 3.0, this.getY() - 3.0, this.getZ() - 3.0, this.getX() + 3.0, this.getY() + 6.0 + 3.0, this.getZ() + 3.0),
+                            Entity::isAlive);
+            EntityReversionData entityReversionData = EntityReversionData.get(level);
+            UUID cause = getCause().getUUID();
+            for (Entity entity : hit) {
+                entityReversionData.putRevertible(cause, entity);
+            }
         }
         super.tick();
     }
@@ -38,14 +41,16 @@ public class GriefTrackingLightningBolt extends LightningBolt {
     @Override
     protected void spawnFire(int extraIgnitions) {
         if (!this.visualOnly && level() instanceof ServerLevel level && getCause() != null && this.level().getGameRules().getBoolean(GameRules.RULE_DOFIRETICK)) {
-            Map<BlockPos, BlockState> alteredBlocks = new Reference2ReferenceOpenHashMap<>();
+            BlockReversionData blockReversionData = BlockReversionData.get(level);
+            UUID cause = getCause().getUUID();
+            ResourceKey<Level> dimension = level.dimension();
             BlockPos blockpos = this.blockPosition();
             BlockState oldState = this.level().getBlockState(blockpos);
             BlockState blockstate = BaseFireBlock.getState(this.level(), blockpos);
             if (oldState.isAir() && blockstate.canSurvive(this.level(), blockpos)) {
                 this.level().setBlockAndUpdate(blockpos, blockstate);
                 this.blocksSetOnFire++;
-                alteredBlocks.put(blockpos, oldState);
+                blockReversionData.putRevertible(cause, dimension, blockpos, oldState);
             }
 
             BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos();
@@ -56,10 +61,9 @@ public class GriefTrackingLightningBolt extends LightningBolt {
                 if (oldState.isAir() && blockstate.canSurvive(this.level(), mutable)) {
                     this.level().setBlockAndUpdate(mutable, blockstate);
                     this.blocksSetOnFire++;
-                    alteredBlocks.put(mutable, blockstate);
+                    blockReversionData.putRevertible(cause, dimension, mutable, oldState);
                 }
             }
-            AbilityReversionBlockData.get(level).putRevertible(getCause().getUUID(), level.dimension(), alteredBlocks);
         }
     }
 }
