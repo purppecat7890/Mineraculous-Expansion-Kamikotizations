@@ -1,0 +1,9 @@
+{
+  "default_name": "Copy Cat",
+  "item_predicate": {
+    "count": 1,
+    "items": "#mineraculouskamikotizations:pictures"
+  },
+  "passive_abilities": "mineraculous:cat_vision",
+  "power_source": "mineraculous:cataclysm"
+}

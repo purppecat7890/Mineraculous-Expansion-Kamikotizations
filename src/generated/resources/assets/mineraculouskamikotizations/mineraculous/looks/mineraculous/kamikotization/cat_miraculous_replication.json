@@ -1,0 +1,13 @@
+{
+  "assets": {
+    "mineraculous:kamikotization_suit": {
+      "mineraculous:geckolib_model": "mineraculouskamikotizations:geo/item/armor/kamikotization/cat_miraculous_replication.geo.json",
+      "mineraculous:texture": "mineraculouskamikotizations:textures/entity/equipment/humanoid/kamikotization/cat_miraculous_replication.png"
+    }
+  },
+  "metadata": {
+    "mineraculous:valid_kamikotizations": [
+      "mineraculouskamikotizations:cat_miraculous_replication"
+    ]
+  }
+}

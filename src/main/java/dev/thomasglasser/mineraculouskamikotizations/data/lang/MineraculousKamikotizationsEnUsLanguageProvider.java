@@ -50,5 +50,6 @@ public class MineraculousKamikotizationsEnUsLanguageProvider extends Mineraculou
 
     protected void addKamikotizations() {
         add(MineraculousKamikotizationsKamikotizations.WEATHER_CONTROL, "Weather Control");
+        add(MineraculousKamikotizationsKamikotizations.CAT_MIRACULOUS_REPLICATION, "Cat Miraculous Replication");
     }
 }
