@@ -9,6 +9,7 @@ import dev.thomasglasser.tommylib.api.tags.ConventionalItemTags;
 import java.util.concurrent.CompletableFuture;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
@@ -26,7 +27,9 @@ public class MineraculousKamikotizationsItemTagsProvider extends ExtendedItemTag
 
         tag(MineraculousKamikotizationsItemTags.PICTURES)
                 .add(Items.PAINTING)
-                .add(Items.PAPER);
+                .add(Items.PAPER)
+                .addOptional(ResourceLocation.fromNamespaceAndPath("exposure", "photograph"))
+                .addOptional(ResourceLocation.fromNamespaceAndPath("exposure", "aged_photograph"));
 
         // Common
         tag(MineraculousKamikotizationsItemTags.UMBRELLA_TOOLS)

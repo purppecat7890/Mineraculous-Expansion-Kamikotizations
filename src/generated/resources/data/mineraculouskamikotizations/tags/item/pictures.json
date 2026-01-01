@@ -1,6 +1,14 @@
 {
   "values": [
     "minecraft:painting",
-    "minecraft:paper"
+    "minecraft:paper",
+    {
+      "id": "exposure:photograph",
+      "required": false
+    },
+    {
+      "id": "exposure:aged_photograph",
+      "required": false
+    }
   ]
 }
