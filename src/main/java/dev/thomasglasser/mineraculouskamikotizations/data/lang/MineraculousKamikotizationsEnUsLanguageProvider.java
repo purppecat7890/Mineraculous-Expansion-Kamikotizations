@@ -2,6 +2,7 @@ package dev.thomasglasser.mineraculouskamikotizations.data.lang;
 
 import dev.thomasglasser.mineraculous.impl.data.lang.MineraculousEnUsLanguageProvider;
 import dev.thomasglasser.mineraculouskamikotizations.MineraculousKamikotizations;
+import dev.thomasglasser.mineraculouskamikotizations.world.ability.MineraculousKamikotizationsAbilities;
 import dev.thomasglasser.mineraculouskamikotizations.world.entity.MineraculousKamikotizationsEntityTypes;
 import dev.thomasglasser.mineraculouskamikotizations.world.entity.kamikotization.MineraculousKamikotizationsKamikotizations;
 import dev.thomasglasser.mineraculouskamikotizations.world.item.MineraculousKamikotizationsCreativeModeTabs;
@@ -20,7 +21,13 @@ public class MineraculousKamikotizationsEnUsLanguageProvider extends Mineraculou
         addItems();
         addEntities();
         addTabs();
+        addAbilities();
         addKamikotizations();
+    }
+
+    protected void addAbilities() {
+        add(MineraculousKamikotizationsAbilities.MIMIC_CAT_MIRACULOUS_TOOL, "Mimic Cat Miraculous Tool");
+        add(MineraculousKamikotizationsAbilities.MIMIC_CAT_MIRACULOUS_LOOKS, "Mimic Cat Miraculous Name");
     }
 
     protected void addItems() {
@@ -50,6 +57,6 @@ public class MineraculousKamikotizationsEnUsLanguageProvider extends Mineraculou
 
     protected void addKamikotizations() {
         add(MineraculousKamikotizationsKamikotizations.WEATHER_CONTROL, "Weather Control");
-        add(MineraculousKamikotizationsKamikotizations.CAT_MIRACULOUS_REPLICATION, "Cat Miraculous Replication");
+        addCapitalized(MineraculousKamikotizationsKamikotizations.CAT_MIRACULOUS_MIMICRY);
     }
 }

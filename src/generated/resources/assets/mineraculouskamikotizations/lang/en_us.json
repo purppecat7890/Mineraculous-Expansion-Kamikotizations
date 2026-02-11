@@ -1,4 +1,6 @@
 {
+  "ability.mineraculouskamikotizations.mimic_cat_miraculous_looks": "Mimic Cat Miraculous Name",
+  "ability.mineraculouskamikotizations.mimic_cat_miraculous_tool": "Mimic Cat Miraculous Tool",
   "ability.mineraculouskamikotizations.weather_control_parasol.ice": "Ice",
   "ability.mineraculouskamikotizations.weather_control_parasol.lightning": "Lightning",
   "ability.mineraculouskamikotizations.weather_control_parasol.weather": "Weather",
@@ -43,6 +45,6 @@
   "item.mineraculouskamikotizations.white_parasol": "White Parasol",
   "item.mineraculouskamikotizations.yellow_parasol": "Yellow Parasol",
   "item_group.mineraculouskamikotizations.mineraculouskamikotizations": "Mineraculous Expansion: Kamikotizations",
-  "kamikotization.mineraculouskamikotizations.cat_miraculous_replication": "Cat Miraculous Replication",
+  "kamikotization.mineraculouskamikotizations.cat_miraculous_mimicry": "Cat Miraculous Mimicry",
   "kamikotization.mineraculouskamikotizations.weather_control": "Weather Control"
 }

@@ -30,8 +30,16 @@
     "mineraculouskamikotizations:white_parasol",
     "mineraculouskamikotizations:yellow_parasol"
   ],
+  "mineraculous:ability": [
+    "mineraculouskamikotizations:mimic_cat_miraculous_looks",
+    "mineraculouskamikotizations:mimic_cat_miraculous_tool"
+  ],
+  "mineraculous:ability_serializer": [
+    "mineraculouskamikotizations:extra_tool",
+    "mineraculouskamikotizations:replicate_looks"
+  ],
   "mineraculous:kamikotization": [
-    "mineraculouskamikotizations:cat_miraculous_replication",
+    "mineraculouskamikotizations:cat_miraculous_mimicry",
     "mineraculouskamikotizations:weather_control"
   ]
 }

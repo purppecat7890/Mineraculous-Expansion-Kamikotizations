@@ -2,6 +2,8 @@ package dev.thomasglasser.mineraculouskamikotizations;
 
 import dev.thomasglasser.mineraculouskamikotizations.core.component.MineraculousKamikotizationsDataComponents;
 import dev.thomasglasser.mineraculouskamikotizations.data.MineraculousKamikotizationsDataGenerators;
+import dev.thomasglasser.mineraculouskamikotizations.network.MineraculousKamikotizationsPayloads;
+import dev.thomasglasser.mineraculouskamikotizations.world.ability.MineraculousKamikotizationsAbilitySerializers;
 import dev.thomasglasser.mineraculouskamikotizations.world.entity.MineraculousKamikotizationsEntityTypes;
 import dev.thomasglasser.mineraculouskamikotizations.world.item.MineraculousKamikotizationsCreativeModeTabs;
 import dev.thomasglasser.mineraculouskamikotizations.world.item.MineraculousKamikotizationsItems;
@@ -21,12 +23,14 @@ public class MineraculousKamikotizations {
     public MineraculousKamikotizations(IEventBus modBus) {
         LOGGER.info("Initializing {} for {} in a {} environment...", MOD_NAME, TommyLibServices.PLATFORM.getPlatformName(), TommyLibServices.PLATFORM.getEnvironmentName());
 
+        MineraculousKamikotizationsAbilitySerializers.init();
         MineraculousKamikotizationsEntityTypes.init();
         MineraculousKamikotizationsItems.init();
         MineraculousKamikotizationsCreativeModeTabs.init();
         MineraculousKamikotizationsDataComponents.init();
 
         modBus.addListener(MineraculousKamikotizationsDataGenerators::onGatherData);
+        modBus.addListener(MineraculousKamikotizationsPayloads::onRegisterPackets);
     }
 
     public static ResourceLocation modLoc(String path) {

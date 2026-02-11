@@ -1,7 +1,7 @@
 package dev.thomasglasser.mineraculouskamikotizations.data;
 
 import dev.thomasglasser.mineraculous.api.core.registries.MineraculousRegistries;
-import dev.thomasglasser.mineraculous.api.world.ability.Abilities;
+import dev.thomasglasser.mineraculous.api.world.miraculous.Miraculouses;
 import dev.thomasglasser.mineraculouskamikotizations.MineraculousKamikotizations;
 import dev.thomasglasser.mineraculouskamikotizations.data.advancements.MineraculousKamikotizationsAdvancementProvider;
 import dev.thomasglasser.mineraculouskamikotizations.data.datamaps.MineraculousKamikotizationsDataMapProvider;
@@ -12,6 +12,7 @@ import dev.thomasglasser.mineraculouskamikotizations.data.models.MineraculousKam
 import dev.thomasglasser.mineraculouskamikotizations.data.modonomicons.MineraculousKamikotizationsBookProvider;
 import dev.thomasglasser.mineraculouskamikotizations.data.recipes.MineraculousKamikotizationsRecipeProvider;
 import dev.thomasglasser.mineraculouskamikotizations.data.tags.MineraculousKamikotizationsItemTagsProvider;
+import dev.thomasglasser.mineraculouskamikotizations.world.ability.MineraculousKamikotizationsAbilities;
 import dev.thomasglasser.mineraculouskamikotizations.world.entity.kamikotization.MineraculousKamikotizationsKamikotizations;
 import dev.thomasglasser.tommylib.api.data.DataGenerationUtils;
 import dev.thomasglasser.tommylib.api.data.tags.EmptyBlockTagsProvider;
@@ -20,7 +21,8 @@ import net.neoforged.neoforge.data.event.GatherDataEvent;
 
 public class MineraculousKamikotizationsDataGenerators {
     private static final RegistrySetBuilder BUILDER = new RegistrySetBuilder()
-            .add(MineraculousRegistries.ABILITY, Abilities::bootstrap)
+            .add(MineraculousRegistries.ABILITY, MineraculousKamikotizationsAbilities::bootstrap)
+            .add(MineraculousRegistries.MIRACULOUS, Miraculouses::bootstrap)
             .add(MineraculousRegistries.KAMIKOTIZATION, MineraculousKamikotizationsKamikotizations::bootstrap);
 
     public static void onGatherData(GatherDataEvent event) {

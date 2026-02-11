@@ -1,0 +1,9 @@
+{
+  "default_name": "Copy Cat",
+  "passive_abilities": [
+    "mineraculous:cat_vision",
+    "mineraculouskamikotizations:mimic_cat_miraculous_tool",
+    "mineraculouskamikotizations:mimic_cat_miraculous_looks"
+  ],
+  "power_source": "mineraculous:cataclysm"
+}
