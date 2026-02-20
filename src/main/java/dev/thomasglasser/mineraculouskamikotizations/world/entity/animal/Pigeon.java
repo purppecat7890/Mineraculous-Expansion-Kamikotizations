@@ -7,6 +7,8 @@ import dev.thomasglasser.mineraculouskamikotizations.world.entity.MineraculousKa
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import java.util.List;
 import java.util.Optional;
+
+import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
@@ -17,6 +19,7 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.entity.AgeableMob;
 import net.minecraft.world.entity.Entity;
@@ -30,8 +33,11 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.control.FlyingMoveControl;
 import net.minecraft.world.entity.ai.memory.WalkTarget;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
+import net.minecraft.world.entity.animal.AbstractSchoolingFish;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.animal.FlyingAnimal;
+import net.minecraft.world.entity.animal.TropicalFish;
+import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
@@ -68,6 +74,8 @@ public class Pigeon extends Animal implements SmartBrainOwner<Pigeon>, GeoEntity
     private static final RawAnimation IDLE = RawAnimation.begin().then("idle", Animation.LoopType.LOOP);
 
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
+
+    private boolean isFlock = true;
 
     public Pigeon(EntityType<? extends Pigeon> entityType, Level level) {
         super(entityType, level);
@@ -137,7 +145,7 @@ public class Pigeon extends Animal implements SmartBrainOwner<Pigeon>, GeoEntity
     }
 
     protected boolean shouldRest() {
-        return false;
+        return this.onGround();
     }
 
     @Override
@@ -258,5 +266,9 @@ public class Pigeon extends Animal implements SmartBrainOwner<Pigeon>, GeoEntity
                 .map(loc -> ResourceKey.create(MineraculousKamikotizationsRegistries.PIGEON_VARIANT, loc))
                 .flatMap(key -> this.registryAccess().registryOrThrow(MineraculousKamikotizationsRegistries.PIGEON_VARIANT).getHolder(key))
                 .ifPresent(this::setVariant);
+    }
+
+    public Holder<PigeonVariant> getVariant(Pigeon pigeon) {
+        return pigeon.getVariant();
     }
 }
