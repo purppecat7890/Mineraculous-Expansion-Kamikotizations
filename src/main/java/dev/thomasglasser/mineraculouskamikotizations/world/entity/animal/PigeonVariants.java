@@ -39,7 +39,7 @@ public class PigeonVariants {
         HolderGetter<Biome> biomes = context.lookup(Registries.BIOME);
 
         register(context, TEMPERATE, HolderSet.empty());
-        register(context, COLD, biomes.getOrThrow(MineraculousKamikotizationsBiomeTags.SPAWNS_COLD_VARIANT_BUTTERFLIES));
+        register(context, COLD, biomes.getOrThrow(MineraculousKamikotizationsBiomeTags.SPAWNS_COLD_VARIANT_PIGEONS));
     }
 
     /**

@@ -16,7 +16,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.biome.Biome;
 import org.jetbrains.annotations.ApiStatus;
 
-/// Stores a texture to use when a {@link Pigeon} is spawned in the provided biomes.
+/** Stores a texture to use when a {@link Pigeon} is spawned in the provided biomes. */
 public final class PigeonVariant {
     public static final Codec<PigeonVariant> DIRECT_CODEC = RecordCodecBuilder.create(instance -> instance.group(
             ResourceLocation.CODEC.fieldOf("texture").forGetter(variant -> variant.texture),
@@ -60,9 +60,9 @@ public final class PigeonVariant {
         if (other == this) {
             return true;
         } else {
-            return other instanceof PigeonVariant butterflyVariant
-                    && Objects.equals(this.texture, butterflyVariant.texture)
-                    && Objects.equals(this.biomes, butterflyVariant.biomes);
+            return other instanceof PigeonVariant pigeonVariant
+                    && Objects.equals(this.texture, pigeonVariant.texture)
+                    && Objects.equals(this.biomes, pigeonVariant.biomes);
         }
     }
 

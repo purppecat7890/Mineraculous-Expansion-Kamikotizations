@@ -54,13 +54,18 @@ import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.animation.AnimatableManager;
+import software.bernie.geckolib.animation.Animation;
 import software.bernie.geckolib.animation.AnimationController;
-import software.bernie.geckolib.constant.DefaultAnimations;
+import software.bernie.geckolib.animation.RawAnimation;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
 public class Pigeon extends Animal implements SmartBrainOwner<Pigeon>, GeoEntity, FlyingAnimal {
     private static final EntityDataAccessor<Holder<PigeonVariant>> DATA_VARIANT = SynchedEntityData.defineId(Pigeon.class, MineraculousKamikotizationsEntityDataSerializers.PIGEON_VARIANT.get());
     private static final EntityDataAccessor<Boolean> DATA_IS_RESTING = SynchedEntityData.defineId(Pigeon.class, EntityDataSerializers.BOOLEAN);
+
+    private static final RawAnimation WALK = RawAnimation.begin().then("walk", Animation.LoopType.LOOP);
+    private static final RawAnimation FLY = RawAnimation.begin().then("fly", Animation.LoopType.LOOP);
+    private static final RawAnimation IDLE = RawAnimation.begin().then("idle", Animation.LoopType.LOOP);
 
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
 
@@ -132,7 +137,7 @@ public class Pigeon extends Animal implements SmartBrainOwner<Pigeon>, GeoEntity
     }
 
     protected boolean shouldRest() {
-        return this.getLightLevelDependentMagicValue() < 0.1F;
+        return false;
     }
 
     @Override
@@ -164,7 +169,7 @@ public class Pigeon extends Animal implements SmartBrainOwner<Pigeon>, GeoEntity
     public List<? extends ExtendedSensor<? extends Pigeon>> getSensors() {
         return ObjectArrayList.of(
                 new NearbyLivingEntitySensor<>(),
-                new ItemTemptingSensor<Pigeon>().temptedWith((butterfly, stack) -> stack.is(MineraculousItemTags.CHEESES_FOODS)));
+                new ItemTemptingSensor<Pigeon>().temptedWith((pigeon, stack) -> stack.is(MineraculousItemTags.CHEESES_FOODS)));
     }
 
     @Override
@@ -187,8 +192,8 @@ public class Pigeon extends Animal implements SmartBrainOwner<Pigeon>, GeoEntity
                         new FirstApplicableBehaviour<Pigeon>(
                                 new BreedWithPartner<>(),
                                 new FollowTemptation<>(),
-                                new SetRandomFlyingTarget<>()).startCondition(butterfly -> !butterfly.shouldRest()),
-                        new SetRandomWalkTarget<>().startCondition(butterfly -> !isResting() && !level().getBlockState(butterfly.blockPosition().below()).isSolid())));
+                                new SetRandomFlyingTarget<>()).startCondition(pigeon -> !pigeon.shouldRest()),
+                        new SetRandomWalkTarget<>().startCondition(pigeon -> !isResting() && !level().getBlockState(pigeon.blockPosition().below()).isSolid())));
     }
 
     @Override
@@ -226,9 +231,12 @@ public class Pigeon extends Animal implements SmartBrainOwner<Pigeon>, GeoEntity
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
         controllers.add(new AnimationController<>(this, 0, state -> {
-            if (isResting())
-                return state.setAndContinue(DefaultAnimations.IDLE);
-            return state.setAndContinue(DefaultAnimations.FLY);
+            if (isResting() && onGround() && getSpeed() == 0.0F) {
+                return state.setAndContinue(IDLE);
+            } else if (!isResting() && onGround() && !(getSpeed() == 0.0F)) {
+                return state.setAndContinue(WALK);
+            }
+            return state.setAndContinue(FLY);
         }));
     }
 

@@ -37,5 +37,8 @@
   "mineraculouskamikotizations:pigeon_variant": [
     "mineraculouskamikotizations:cold",
     "mineraculouskamikotizations:temperate"
+  ],
+  "neoforge:entity_data_serializers": [
+    "mineraculouskamikotizations:pigeon_variant"
   ]
 }
