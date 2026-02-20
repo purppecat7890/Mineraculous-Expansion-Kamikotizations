@@ -1,7 +1,10 @@
 package dev.thomasglasser.mineraculouskamikotizations;
 
+import dev.thomasglasser.mineraculouskamikotizations.core.MineraculousKamikotizationsCoreEvents;
 import dev.thomasglasser.mineraculouskamikotizations.core.component.MineraculousKamikotizationsDataComponents;
 import dev.thomasglasser.mineraculouskamikotizations.data.MineraculousKamikotizationsDataGenerators;
+import dev.thomasglasser.mineraculouskamikotizations.world.entity.MineraculousKamikotizationsEntityDataSerializers;
+import dev.thomasglasser.mineraculouskamikotizations.world.entity.MineraculousKamikotizationsEntityEvents;
 import dev.thomasglasser.mineraculouskamikotizations.world.entity.MineraculousKamikotizationsEntityTypes;
 import dev.thomasglasser.mineraculouskamikotizations.world.item.MineraculousKamikotizationsCreativeModeTabs;
 import dev.thomasglasser.mineraculouskamikotizations.world.item.MineraculousKamikotizationsItems;
@@ -23,10 +26,14 @@ public class MineraculousKamikotizations {
 
         MineraculousKamikotizationsEntityTypes.init();
         MineraculousKamikotizationsItems.init();
+        MineraculousKamikotizationsEntityDataSerializers.init();
         MineraculousKamikotizationsCreativeModeTabs.init();
         MineraculousKamikotizationsDataComponents.init();
 
         modBus.addListener(MineraculousKamikotizationsDataGenerators::onGatherData);
+        modBus.addListener(MineraculousKamikotizationsEntityEvents::onEntityAttributeCreation);
+        modBus.addListener(MineraculousKamikotizationsEntityEvents::onRegisterSpawnPlacements);
+        modBus.addListener(MineraculousKamikotizationsCoreEvents::onNewDataPackRegistry);
     }
 
     public static ResourceLocation modLoc(String path) {

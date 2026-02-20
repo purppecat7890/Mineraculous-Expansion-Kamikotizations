@@ -1,6 +1,7 @@
 package dev.thomasglasser.mineraculouskamikotizations.client;
 
 import dev.thomasglasser.mineraculous.api.world.item.MineraculousItems;
+import dev.thomasglasser.mineraculouskamikotizations.client.renderer.entity.PigeonRenderer;
 import dev.thomasglasser.mineraculouskamikotizations.client.renderer.item.MineraculousKamikotizationsItemProperties;
 import dev.thomasglasser.mineraculouskamikotizations.world.entity.MineraculousKamikotizationsEntityTypes;
 import dev.thomasglasser.mineraculouskamikotizations.world.item.MineraculousKamikotizationsItems;
@@ -70,5 +71,6 @@ public class MineraculousKamikotizationsClientEvents {
         event.registerEntityRenderer(MineraculousKamikotizationsEntityTypes.GRIEF_TRACKING_ICE_CHARGE.get(), ThrownItemRenderer::new);
         event.registerEntityRenderer(MineraculousKamikotizationsEntityTypes.GRIEF_TRACKING_LIGHTNING_BOLT.get(), LightningBoltRenderer::new);
         event.registerEntityRenderer(MineraculousKamikotizationsEntityTypes.GRIEF_TRACKING_WIND_CHARGE.get(), WindChargeRenderer::new);
+        event.registerEntityRenderer(MineraculousKamikotizationsEntityTypes.PIGEON.get(), PigeonRenderer::new);
     }
 }

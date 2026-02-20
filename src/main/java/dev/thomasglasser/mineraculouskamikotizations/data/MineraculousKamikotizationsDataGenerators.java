@@ -2,6 +2,7 @@ package dev.thomasglasser.mineraculouskamikotizations.data;
 
 import dev.thomasglasser.mineraculous.api.core.registries.MineraculousRegistries;
 import dev.thomasglasser.mineraculouskamikotizations.MineraculousKamikotizations;
+import dev.thomasglasser.mineraculouskamikotizations.core.registries.MineraculousKamikotizationsRegistries;
 import dev.thomasglasser.mineraculouskamikotizations.data.advancements.MineraculousKamikotizationsAdvancementProvider;
 import dev.thomasglasser.mineraculouskamikotizations.data.datamaps.MineraculousKamikotizationsDataMapProvider;
 import dev.thomasglasser.mineraculouskamikotizations.data.lang.MineraculousKamikotizationsEnUsLanguageProvider;
@@ -10,6 +11,7 @@ import dev.thomasglasser.mineraculouskamikotizations.data.models.MineraculousKam
 import dev.thomasglasser.mineraculouskamikotizations.data.modonomicons.MineraculousKamikotizationsBookProvider;
 import dev.thomasglasser.mineraculouskamikotizations.data.recipes.MineraculousKamikotizationsRecipeProvider;
 import dev.thomasglasser.mineraculouskamikotizations.data.tags.MineraculousKamikotizationsItemTagsProvider;
+import dev.thomasglasser.mineraculouskamikotizations.world.entity.animal.PigeonVariants;
 import dev.thomasglasser.mineraculouskamikotizations.world.entity.kamikotization.MineraculousKamikotizationsKamikotizations;
 import dev.thomasglasser.tommylib.api.data.DataGenerationUtils;
 import dev.thomasglasser.tommylib.api.data.tags.EmptyBlockTagsProvider;
@@ -18,6 +20,7 @@ import net.neoforged.neoforge.data.event.GatherDataEvent;
 
 public class MineraculousKamikotizationsDataGenerators {
     private static final RegistrySetBuilder BUILDER = new RegistrySetBuilder()
+            .add(MineraculousKamikotizationsRegistries.PIGEON_VARIANT, PigeonVariants::bootstrap)
             .add(MineraculousRegistries.KAMIKOTIZATION, MineraculousKamikotizationsKamikotizations::bootstrap);
 
     public static void onGatherData(GatherDataEvent event) {
