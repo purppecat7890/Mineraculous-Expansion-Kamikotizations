@@ -38,6 +38,9 @@
     "mineraculouskamikotizations:cold",
     "mineraculouskamikotizations:temperate"
   ],
+  "neoforge:biome_modifier": [
+    "mineraculouskamikotizations:spawn_pigeons"
+  ],
   "neoforge:entity_data_serializers": [
     "mineraculouskamikotizations:pigeon_variant"
   ]

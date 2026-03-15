@@ -2,23 +2,19 @@ package dev.thomasglasser.mineraculouskamikotizations.world.entity.animal;
 
 import dev.thomasglasser.mineraculous.api.tags.MineraculousItemTags;
 import dev.thomasglasser.mineraculouskamikotizations.core.registries.MineraculousKamikotizationsRegistries;
+import dev.thomasglasser.mineraculouskamikotizations.tags.MineraculousKamikotizationsBiomeTags;
 import dev.thomasglasser.mineraculouskamikotizations.world.entity.MineraculousKamikotizationsEntityDataSerializers;
 import dev.thomasglasser.mineraculouskamikotizations.world.entity.MineraculousKamikotizationsEntityTypes;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import java.util.List;
-import java.util.Optional;
-
-import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
-import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.entity.AgeableMob;
@@ -31,15 +27,16 @@ import net.minecraft.world.entity.ai.Brain;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.control.FlyingMoveControl;
+import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.memory.WalkTarget;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
-import net.minecraft.world.entity.animal.AbstractSchoolingFish;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.animal.FlyingAnimal;
-import net.minecraft.world.entity.animal.TropicalFish;
-import net.minecraft.world.item.DyeColor;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.schedule.Activity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 import net.tslat.smartbrainlib.api.SmartBrainOwner;
@@ -48,6 +45,7 @@ import net.tslat.smartbrainlib.api.core.SmartBrainProvider;
 import net.tslat.smartbrainlib.api.core.behaviour.FirstApplicableBehaviour;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.look.LookAtTarget;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.misc.BreedWithPartner;
+import net.tslat.smartbrainlib.api.core.behaviour.custom.misc.Panic;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.move.FollowTemptation;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.move.MoveToWalkTarget;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.path.SetRandomFlyingTarget;
@@ -65,7 +63,7 @@ import software.bernie.geckolib.animation.AnimationController;
 import software.bernie.geckolib.animation.RawAnimation;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
-public class Pigeon extends Animal implements SmartBrainOwner<Pigeon>, GeoEntity, FlyingAnimal {
+public class Pigeon extends AbstractFlockingBird implements SmartBrainOwner<Pigeon>, GeoEntity, FlyingAnimal {
     private static final EntityDataAccessor<Holder<PigeonVariant>> DATA_VARIANT = SynchedEntityData.defineId(Pigeon.class, MineraculousKamikotizationsEntityDataSerializers.PIGEON_VARIANT.get());
     private static final EntityDataAccessor<Boolean> DATA_IS_RESTING = SynchedEntityData.defineId(Pigeon.class, EntityDataSerializers.BOOLEAN);
 
@@ -79,7 +77,7 @@ public class Pigeon extends Animal implements SmartBrainOwner<Pigeon>, GeoEntity
 
     public Pigeon(EntityType<? extends Pigeon> entityType, Level level) {
         super(entityType, level);
-        moveControl = new FlyingMoveControl(this, 2, false);
+        moveControl = new FlyingMoveControl(this, 20, false);
     }
 
     public static AttributeSupplier.Builder createAttributes() {
@@ -91,19 +89,20 @@ public class Pigeon extends Animal implements SmartBrainOwner<Pigeon>, GeoEntity
     }
 
     @Override
+    public @Nullable AgeableMob getBreedOffspring(ServerLevel level, AgeableMob otherParent) {
+        Pigeon baby = MineraculousKamikotizationsEntityTypes.PIGEON.get().create(level);
+        if (baby != null && otherParent instanceof Pigeon partner) {
+            baby.setVariant(this.random.nextBoolean() ? this.getVariant() : partner.getVariant());
+        }
+        return baby;
+    }
+
+    @Override
     protected void defineSynchedData(SynchedEntityData.Builder builder) {
         super.defineSynchedData(builder);
         Registry<PigeonVariant> registry = this.registryAccess().registryOrThrow(MineraculousKamikotizationsRegistries.PIGEON_VARIANT);
         builder.define(DATA_VARIANT, registry.getHolder(PigeonVariants.TEMPERATE).or(registry::getAny).orElseThrow());
         builder.define(DATA_IS_RESTING, false);
-    }
-
-    public Holder<PigeonVariant> getVariant() {
-        return this.entityData.get(DATA_VARIANT);
-    }
-
-    public void setVariant(Holder<PigeonVariant> variant) {
-        this.entityData.set(DATA_VARIANT, variant);
     }
 
     public boolean isResting() {
@@ -130,22 +129,51 @@ public class Pigeon extends Animal implements SmartBrainOwner<Pigeon>, GeoEntity
     }
 
     @Override
-    public @Nullable AgeableMob getBreedOffspring(ServerLevel level, AgeableMob otherParent) {
-        Pigeon baby = MineraculousKamikotizationsEntityTypes.PIGEON.get().create(level);
-        if (baby != null && otherParent instanceof Pigeon partner) {
-            baby.setVariant(this.random.nextBoolean() ? this.getVariant() : partner.getVariant());
-        }
-        return baby;
+    public boolean isMaxGroupSizeReached(int size) {
+        return !this.isFlock;
     }
 
+    static class PigeonGroupData extends FlockSpawnGroupData {
+        final PigeonVariant variant;
+
+        PigeonGroupData(Pigeon leader, PigeonVariant variant) {
+            super(leader);
+            this.variant = variant;
+        }
+    }
+
+    @Nullable
     @Override
     public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty, MobSpawnType spawnType, @Nullable SpawnGroupData spawnGroupData) {
-        this.setVariant(PigeonVariants.getSpawnVariant(this.registryAccess(), level.getBiome(this.blockPosition())));
-        return super.finalizeSpawn(level, difficulty, spawnType, spawnGroupData);
+        spawnGroupData = super.finalizeSpawn(level, difficulty, spawnType, spawnGroupData);
+        RandomSource randomsource = level.getRandom();
+        Holder<PigeonVariant> pigeon$variant;
+        if (spawnGroupData instanceof PigeonGroupData pigeon$pigeongroupdata) {
+            pigeon$variant = new Holder.Direct<>(pigeon$pigeongroupdata.variant);
+            this.startFollowing(((AbstractFlockingBird.FlockSpawnGroupData) spawnGroupData).leader);
+        } else if ((double) randomsource.nextFloat() < 0.9) {
+            pigeon$variant = PigeonVariants.getSpawnVariant(registryAccess(), this.level().getBiome(blockPosition()));
+            AgeableMobGroupData data = new AgeableMobGroupData(true, 0.5f);
+            spawnGroupData = new PigeonGroupData(this, pigeon$variant.value());
+        } else {
+            this.isFlock = false;
+            pigeon$variant = PigeonVariants.getSpawnVariant(registryAccess(), this.level().getBiome(blockPosition()));
+
+        }
+        this.setVariant(this.random.nextBoolean() ? this.getVariant() : pigeon$variant);
+        return spawnGroupData;
+    }
+
+    public static boolean checkPigeonSpawnRules(
+            EntityType<Pigeon> pigeon, LevelAccessor level, MobSpawnType spawnType, BlockPos pos, RandomSource random) {
+        return level.getFluidState(pos.below()).isEmpty()
+                && level.getBlockState(pos.above()).is(BlockTags.LEAVES)
+                && (level.getBiome(pos).is(MineraculousKamikotizationsBiomeTags.SPAWNS_PIGEONS)
+                        || Animal.checkAnimalSpawnRules(pigeon, level, spawnType, pos, random));
     }
 
     protected boolean shouldRest() {
-        return this.onGround();
+        return this.getIdleTasks().getActivity() == Activity.IDLE && (this.getBlockStateOn().is(BlockTags.LEAVES) || this.getLightLevelDependentMagicValue() <= 7);
     }
 
     @Override
@@ -159,10 +187,18 @@ public class Pigeon extends Animal implements SmartBrainOwner<Pigeon>, GeoEntity
         super.tick();
         if (!level().isClientSide()) {
             if (shouldRest()) {
-                if (!isResting() && level().getBlockState(blockPosition().below()).isSolid())
+                if (!isResting() && level().getBlockState(blockPosition().below()).isSolid()) {
                     setResting(true);
-            } else if (isResting()) {
-                setResting(false);
+                } else if (isResting()) {
+                    setResting(false);
+                }
+            }
+            if (isResting()) {
+                Player player = level().getNearestPlayer(this, 12.0);
+                if (player != null && player.isSprinting()) {
+                    setResting(false);
+                    goalSelector.setControlFlag(Goal.Flag.MOVE, true);
+                }
             }
         }
         setNoGravity(!isResting());
@@ -184,6 +220,7 @@ public class Pigeon extends Animal implements SmartBrainOwner<Pigeon>, GeoEntity
     public BrainActivityGroup<? extends Pigeon> getCoreTasks() {
         return BrainActivityGroup.coreTasks(
                 new LookAtTarget<>(),
+                new Panic<>(),
                 new MoveToWalkTarget<Pigeon>().whenStopping(this::onMoveToWalkTargetStopping));
     }
 
@@ -222,7 +259,7 @@ public class Pigeon extends Animal implements SmartBrainOwner<Pigeon>, GeoEntity
 
     @Override
     public boolean canBeLeashed() {
-        return false;
+        return true;
     }
 
     @Override
@@ -251,24 +288,5 @@ public class Pigeon extends Animal implements SmartBrainOwner<Pigeon>, GeoEntity
     @Override
     public AnimatableInstanceCache getAnimatableInstanceCache() {
         return cache;
-    }
-
-    @Override
-    public void addAdditionalSaveData(CompoundTag compound) {
-        super.addAdditionalSaveData(compound);
-        this.getVariant().unwrapKey().ifPresent(key -> compound.putString("variant", key.location().toString()));
-    }
-
-    @Override
-    public void readAdditionalSaveData(CompoundTag compound) {
-        super.readAdditionalSaveData(compound);
-        Optional.ofNullable(ResourceLocation.tryParse(compound.getString("variant")))
-                .map(loc -> ResourceKey.create(MineraculousKamikotizationsRegistries.PIGEON_VARIANT, loc))
-                .flatMap(key -> this.registryAccess().registryOrThrow(MineraculousKamikotizationsRegistries.PIGEON_VARIANT).getHolder(key))
-                .ifPresent(this::setVariant);
-    }
-
-    public Holder<PigeonVariant> getVariant(Pigeon pigeon) {
-        return pigeon.getVariant();
     }
 }

@@ -2,10 +2,9 @@ package dev.thomasglasser.mineraculouskamikotizations.world.entity.ai.goal;
 
 import com.mojang.datafixers.DataFixUtils;
 import dev.thomasglasser.mineraculouskamikotizations.world.entity.animal.AbstractFlockingBird;
-import net.minecraft.world.entity.ai.goal.Goal;
-
 import java.util.List;
 import java.util.function.Predicate;
+import net.minecraft.world.entity.ai.goal.Goal;
 
 public class FollowFlockPigeonLeaderGoal extends Goal {
     private static final int INTERVAL_TICKS = 200;
@@ -36,7 +35,7 @@ public class FollowFlockPigeonLeaderGoal extends Goal {
             Predicate<AbstractFlockingBird> predicate = bird -> bird.canBeFollowed() || !bird.isFollower();
             List<? extends AbstractFlockingBird> list = this.mob
                     .level()
-                    .getEntitiesOfClass((Class<? extends AbstractFlockingBird>)this.mob.getClass(), this.mob.getBoundingBox().inflate(8.0, 8.0, 8.0), predicate);
+                    .getEntitiesOfClass((Class<? extends AbstractFlockingBird>) this.mob.getClass(), this.mob.getBoundingBox().inflate(8.0, 8.0, 8.0), predicate);
             AbstractFlockingBird abstractFlockingBird = DataFixUtils.orElse(list.stream().filter(AbstractFlockingBird::canBeFollowed).findAny(), this.mob);
             abstractFlockingBird.addFollowers(list.stream().filter(bird -> !bird.isFollower()));
             return this.mob.isFollower();

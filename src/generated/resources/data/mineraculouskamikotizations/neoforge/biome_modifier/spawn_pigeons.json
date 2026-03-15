@@ -1,0 +1,10 @@
+{
+  "type": "neoforge:add_spawns",
+  "biomes": "#mineraculouskamikotizations:spawns_pigeons",
+  "spawners": {
+    "type": "mineraculouskamikotizations:pigeon",
+    "maxCount": 15,
+    "minCount": 5,
+    "weight": 10
+  }
+}
