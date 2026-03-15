@@ -153,7 +153,6 @@ public class Pigeon extends AbstractFlockingBird implements SmartBrainOwner<Pige
             this.startFollowing(((AbstractFlockingBird.FlockSpawnGroupData) spawnGroupData).leader);
         } else if ((double) randomsource.nextFloat() < 0.9) {
             pigeon$variant = PigeonVariants.getSpawnVariant(registryAccess(), this.level().getBiome(blockPosition()));
-            AgeableMobGroupData data = new AgeableMobGroupData(true, 0.5f);
             spawnGroupData = new PigeonGroupData(this, pigeon$variant.value());
         } else {
             this.isFlock = false;
