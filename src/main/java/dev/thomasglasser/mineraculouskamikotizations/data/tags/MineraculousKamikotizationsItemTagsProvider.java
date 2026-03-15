@@ -1,5 +1,6 @@
 package dev.thomasglasser.mineraculouskamikotizations.data.tags;
 
+import dev.thomasglasser.mineraculous.api.tags.MineraculousItemTags;
 import dev.thomasglasser.mineraculouskamikotizations.MineraculousKamikotizations;
 import dev.thomasglasser.mineraculouskamikotizations.tags.MineraculousKamikotizationsItemTags;
 import dev.thomasglasser.mineraculouskamikotizations.world.item.MineraculousKamikotizationsItems;
@@ -22,6 +23,10 @@ public class MineraculousKamikotizationsItemTagsProvider extends ExtendedItemTag
         // Mod Specific
         tag(MineraculousKamikotizationsItemTags.PARASOLS)
                 .add(MineraculousKamikotizationsItems.PARASOLS.values().toArray(new DeferredItem[0]));
+
+        // Mod Specific
+        tag(MineraculousKamikotizationsItemTags.PIGEON_FOOD)
+                .addTag(MineraculousItemTags.CHEESE);
 
         // Common
         tag(MineraculousKamikotizationsItemTags.UMBRELLA_TOOLS)

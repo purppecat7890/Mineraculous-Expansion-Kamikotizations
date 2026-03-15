@@ -15,18 +15,6 @@ public class PigeonRenderer<T extends Pigeon> extends GeoEntityRenderer<T> {
     }
 
     @Override
-    public void render(T entity, float entityYaw, float partialTick, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight) {
-        if (entity instanceof Pigeon) {
-            if (entity.isBaby()) {
-                withScale(0.75F);
-            } else {
-                withScale(1F);
-            }
-        }
-        super.render(entity, entityYaw, partialTick, poseStack, bufferSource, packedLight);
-    }
-
-    @Override
     public ResourceLocation getTextureLocation(T animatable) {
         return animatable.getVariant().value().texture();
     }

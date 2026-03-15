@@ -7,7 +7,7 @@ import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceKey;
 
 public class MineraculousKamikotizationsRegistries {
-    /** Data-driven registry holding {@link PigeonVariant}s for use in {@link Pigeon} visuals. */
+    /// Data-driven registry holding {@link PigeonVariant}s for use in {@link Pigeon} visuals.
     public static final ResourceKey<Registry<PigeonVariant>> PIGEON_VARIANT = create("pigeon_variant");
 
     private static <T> ResourceKey<Registry<T>> create(String name) {

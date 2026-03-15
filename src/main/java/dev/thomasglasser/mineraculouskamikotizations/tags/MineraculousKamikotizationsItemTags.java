@@ -13,6 +13,9 @@ public class MineraculousKamikotizationsItemTags {
     // Common
     public static final TagKey<Item> UMBRELLA_TOOLS = createC("tools/umbrella");
 
+    /// Items that can feed {@link dev.thomasglasser.mineraculouskamikotizations.world.entity.animal.Pigeon}s.
+    public static final TagKey<Item> PIGEON_FOOD = create("pigeon_food");
+
     private static TagKey<Item> create(String name) {
         return TagKey.create(Registries.ITEM, MineraculousKamikotizations.modLoc(name));
     }

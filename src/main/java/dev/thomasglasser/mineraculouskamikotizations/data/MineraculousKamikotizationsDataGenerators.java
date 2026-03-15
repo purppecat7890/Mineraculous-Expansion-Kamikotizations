@@ -23,9 +23,9 @@ import net.neoforged.neoforge.registries.NeoForgeRegistries;
 
 public class MineraculousKamikotizationsDataGenerators {
     private static final RegistrySetBuilder BUILDER = new RegistrySetBuilder()
-            .add(MineraculousKamikotizationsRegistries.PIGEON_VARIANT, PigeonVariants::bootstrap)
+            .add(MineraculousRegistries.KAMIKOTIZATION, MineraculousKamikotizationsKamikotizations::bootstrap)
             .add(NeoForgeRegistries.Keys.BIOME_MODIFIERS, MineraculousKamikotizationsBiomeModifiers::bootstrap)
-            .add(MineraculousRegistries.KAMIKOTIZATION, MineraculousKamikotizationsKamikotizations::bootstrap);
+            .add(MineraculousKamikotizationsRegistries.PIGEON_VARIANT, PigeonVariants::bootstrap);
 
     public static void onGatherData(GatherDataEvent event) {
         // Server

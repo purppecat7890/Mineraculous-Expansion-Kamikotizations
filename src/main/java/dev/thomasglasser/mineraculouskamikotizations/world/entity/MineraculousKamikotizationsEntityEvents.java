@@ -8,7 +8,7 @@ import net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent;
 import net.neoforged.neoforge.event.entity.RegisterSpawnPlacementsEvent;
 
 public class MineraculousKamikotizationsEntityEvents {
-    /** Registration */
+    /// Registration
     public static void onEntityAttributeCreation(EntityAttributeCreationEvent event) {
         event.put(MineraculousKamikotizationsEntityTypes.PIGEON.get(), Pigeon.createAttributes().build());
     }

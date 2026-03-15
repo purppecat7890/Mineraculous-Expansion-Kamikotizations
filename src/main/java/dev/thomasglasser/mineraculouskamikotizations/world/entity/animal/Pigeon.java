@@ -3,6 +3,7 @@ package dev.thomasglasser.mineraculouskamikotizations.world.entity.animal;
 import dev.thomasglasser.mineraculous.api.tags.MineraculousItemTags;
 import dev.thomasglasser.mineraculouskamikotizations.core.registries.MineraculousKamikotizationsRegistries;
 import dev.thomasglasser.mineraculouskamikotizations.tags.MineraculousKamikotizationsBiomeTags;
+import dev.thomasglasser.mineraculouskamikotizations.tags.MineraculousKamikotizationsItemTags;
 import dev.thomasglasser.mineraculouskamikotizations.world.entity.MineraculousKamikotizationsEntityDataSerializers;
 import dev.thomasglasser.mineraculouskamikotizations.world.entity.MineraculousKamikotizationsEntityTypes;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
@@ -125,7 +126,7 @@ public class Pigeon extends AbstractFlockingBird implements SmartBrainOwner<Pige
 
     @Override
     public boolean isFood(ItemStack stack) {
-        return stack.is(MineraculousItemTags.CHEESES_FOODS);
+        return stack.is(MineraculousKamikotizationsItemTags.PIGEON_FOOD);
     }
 
     @Override
@@ -212,21 +213,14 @@ public class Pigeon extends AbstractFlockingBird implements SmartBrainOwner<Pige
     public List<? extends ExtendedSensor<? extends Pigeon>> getSensors() {
         return ObjectArrayList.of(
                 new NearbyLivingEntitySensor<>(),
-                new ItemTemptingSensor<Pigeon>().temptedWith((pigeon, stack) -> stack.is(MineraculousItemTags.CHEESES_FOODS)));
+                new ItemTemptingSensor<Pigeon>().temptedWith((pigeon, stack) -> stack.is(MineraculousKamikotizationsItemTags.PIGEON_FOOD)));
     }
 
     @Override
     public BrainActivityGroup<? extends Pigeon> getCoreTasks() {
         return BrainActivityGroup.coreTasks(
                 new LookAtTarget<>(),
-                new Panic<>(),
-                new MoveToWalkTarget<Pigeon>().whenStopping(this::onMoveToWalkTargetStopping));
-    }
-
-    protected void onMoveToWalkTargetStopping(Pigeon pigeon) {}
-
-    protected boolean hasReachedTarget(Entity entity, WalkTarget target) {
-        return target != null && target.getTarget().currentBlockPosition().distManhattan(entity.blockPosition()) <= target.getCloseEnoughDist();
+                new Panic<>());
     }
 
     @Override
@@ -242,35 +236,8 @@ public class Pigeon extends AbstractFlockingBird implements SmartBrainOwner<Pige
 
     @Override
     protected float getSoundVolume() {
-        return 0.1F;
+        return 1.1F;
     }
-
-    @Override
-    public boolean isPushable() {
-        return false;
-    }
-
-    @Override
-    protected void doPush(Entity entity) {}
-
-    @Override
-    protected void pushEntities() {}
-
-    @Override
-    public boolean canBeLeashed() {
-        return true;
-    }
-
-    @Override
-    protected void checkFallDamage(double y, boolean onGround, BlockState state, BlockPos pos) {}
-
-    @Override
-    public boolean isIgnoringBlockTriggers() {
-        return true;
-    }
-
-    @Override
-    protected void playStepSound(BlockPos pos, BlockState state) {}
 
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
