@@ -2,10 +2,7 @@ package dev.thomasglasser.mineraculouskamikotizations.world.entity.animal;
 
 import dev.thomasglasser.mineraculouskamikotizations.core.registries.MineraculousKamikotizationsRegistries;
 import dev.thomasglasser.mineraculouskamikotizations.world.entity.MineraculousKamikotizationsEntityDataSerializers;
-import dev.thomasglasser.mineraculouskamikotizations.world.entity.MineraculousKamikotizationsEntityTypes;
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Stream;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.nbt.CompoundTag;
@@ -18,28 +15,36 @@ import net.minecraft.world.entity.AgeableMob;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.ai.control.FlyingMoveControl;
+import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.animal.FlyingAnimal;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.tslat.smartbrainlib.api.core.navigation.SmoothFlyingPathNavigation;
 import org.jetbrains.annotations.Nullable;
 
-public class AbstractFlockingBird extends Animal implements FlyingAnimal {
-    private static final EntityDataAccessor<Holder<PigeonVariant>> DATA_VARIANT = SynchedEntityData.defineId(AbstractFlockingBird.class, MineraculousKamikotizationsEntityDataSerializers.PIGEON_VARIANT.get());
+public class FlockingFlyingAnimal extends Animal implements FlyingAnimal {
+    private static final EntityDataAccessor<Holder<PigeonVariant>> DATA_PIGEON_VARIANT = SynchedEntityData.defineId(FlockingFlyingAnimal.class, MineraculousKamikotizationsEntityDataSerializers.PIGEON_VARIANT.get());
+    public boolean isFlock = true;
 
     @Nullable
-    private AbstractFlockingBird leader;
+    public FlockingFlyingAnimal leader;
 
-    public AbstractFlockingBird(EntityType<? extends AbstractFlockingBird> entityType, Level level) {
+    protected FlockingFlyingAnimal(EntityType<? extends Animal> entityType, Level level) {
         super(entityType, level);
-        moveControl = new FlyingMoveControl(this, 2, false);
+        this.moveControl = new FlyingMoveControl(this, 2, false);
+    }
+
+    @Override
+    public @Nullable AgeableMob getBreedOffspring(ServerLevel level, AgeableMob otherParent) {
+        return otherParent.getBreedOffspring(level, this);
     }
 
     @Override
     protected void defineSynchedData(SynchedEntityData.Builder builder) {
         super.defineSynchedData(builder);
         Registry<PigeonVariant> registry = this.registryAccess().registryOrThrow(MineraculousKamikotizationsRegistries.PIGEON_VARIANT);
-        builder.define(DATA_VARIANT, registry.getHolder(PigeonVariants.TEMPERATE).or(registry::getAny).orElseThrow());
+        builder.define(DATA_PIGEON_VARIANT, registry.getHolder(PigeonVariants.TEMPERATE).or(registry::getAny).orElseThrow());
     }
 
     @Override
@@ -57,54 +62,47 @@ public class AbstractFlockingBird extends Animal implements FlyingAnimal {
                 .ifPresent(this::setVariant);
     }
 
-    public boolean isFollower() {
-        return this.leader != null && this.leader.isAlive();
-    }
-
-    public AbstractFlockingBird startFollowing(AbstractFlockingBird leader) {
-        this.leader = leader;
-        return leader;
-    }
-
-    @Override
-    public void tick() {
-        super.tick();
-        if (this.level().random.nextInt(200) == 1) {
-            List<? extends Pigeon> list = this.level()
-                    .getEntitiesOfClass((Class<? extends Pigeon>) this.getClass(), this.getBoundingBox().inflate(8.0, 8.0, 8.0));
-        }
-    }
-    public Holder<PigeonVariant> getVariant() {
-        return this.entityData.get(DATA_VARIANT);
-    }
-
-    public void setVariant(Holder<PigeonVariant> variant) {
-        this.entityData.set(DATA_VARIANT, variant);
-    }
-
-    @Override
-    public @Nullable AgeableMob getBreedOffspring(ServerLevel level, AgeableMob otherParent) {
-        Pigeon baby = MineraculousKamikotizationsEntityTypes.PIGEON.get().create(level);
-        if (baby != null && otherParent instanceof Pigeon partner) {
-            baby.setVariant(this.random.nextBoolean() ? this.getVariant() : partner.getVariant());
-        }
-        return baby;
-    }
-
     @Override
     public boolean isFood(ItemStack stack) {
         return false;
     }
 
-    @Override
-    public boolean isFlying() {
-        return false;
+    public boolean isFollower() {
+        return this.leader != null && this.leader.isAlive();
     }
 
-    public static class FlockSpawnGroupData implements SpawnGroupData {
-        public final AbstractFlockingBird leader;
+    public FlockingFlyingAnimal startFollowing(FlockingFlyingAnimal leader) {
+        this.leader = leader;
+        return leader;
+    }
 
-        public FlockSpawnGroupData(AbstractFlockingBird leader) {
+    public FlockingFlyingAnimal isLeader() {
+        return this.leader;
+    }
+
+    public Holder<PigeonVariant> getVariant() {
+        return this.entityData.get(DATA_PIGEON_VARIANT);
+    }
+
+    public void setVariant(Holder<PigeonVariant> variant) {
+        this.entityData.set(DATA_PIGEON_VARIANT, variant);
+    }
+
+    @Override
+    public boolean isFlying() {
+        return true;
+    }
+
+    @Override
+    protected PathNavigation createNavigation(Level level) {
+        return new SmoothFlyingPathNavigation(this, level);
+    }
+
+    public static class FlockingSpawnGroupData extends AgeableMobGroupData implements SpawnGroupData {
+        public final FlockingFlyingAnimal leader;
+
+        public FlockingSpawnGroupData(boolean shouldSpawnBaby, FlockingFlyingAnimal leader) {
+            super(shouldSpawnBaby);
             this.leader = leader;
         }
     }

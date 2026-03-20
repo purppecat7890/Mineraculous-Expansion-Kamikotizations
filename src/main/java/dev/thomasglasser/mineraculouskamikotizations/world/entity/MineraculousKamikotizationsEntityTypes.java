@@ -18,7 +18,8 @@ public class MineraculousKamikotizationsEntityTypes {
             .sized(0.3125F, 0.3125F));
 
     // Animals
-    public static final DeferredHolder<EntityType<?>, EntityType<Pigeon>> PIGEON = ENTITY_TYPES.register("pigeon", Pigeon::new, MobCategory.CREATURE, builder -> builder);
+    public static final DeferredHolder<EntityType<?>, EntityType<Pigeon>> PIGEON = ENTITY_TYPES.register("pigeon", Pigeon::new, MobCategory.CREATURE, builder -> builder
+            .sized(0.3325F, 0.3325F));
 
     // Grief Tracking
     public static final DeferredHolder<EntityType<?>, EntityType<GriefTrackingIceCharge>> GRIEF_TRACKING_ICE_CHARGE = ENTITY_TYPES.register("grief_tracking_ice_charge", GriefTrackingIceCharge::new, MobCategory.MISC, builder -> builder

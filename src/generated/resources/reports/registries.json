@@ -36,7 +36,8 @@
   ],
   "mineraculouskamikotizations:pigeon_variant": [
     "mineraculouskamikotizations:cold",
-    "mineraculouskamikotizations:temperate"
+    "mineraculouskamikotizations:temperate",
+    "mineraculouskamikotizations:warm"
   ],
   "neoforge:biome_modifier": [
     "mineraculouskamikotizations:spawn_pigeons"

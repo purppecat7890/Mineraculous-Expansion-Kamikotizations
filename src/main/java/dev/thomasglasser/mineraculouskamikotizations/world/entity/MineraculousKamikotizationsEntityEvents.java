@@ -1,7 +1,6 @@
 package dev.thomasglasser.mineraculouskamikotizations.world.entity;
 
 import dev.thomasglasser.mineraculouskamikotizations.world.entity.animal.Pigeon;
-import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.SpawnPlacementTypes;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent;
@@ -14,6 +13,6 @@ public class MineraculousKamikotizationsEntityEvents {
     }
 
     public static void onRegisterSpawnPlacements(RegisterSpawnPlacementsEvent event) {
-        event.register(MineraculousKamikotizationsEntityTypes.PIGEON.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Mob::checkMobSpawnRules, RegisterSpawnPlacementsEvent.Operation.OR);
+        event.register(MineraculousKamikotizationsEntityTypes.PIGEON.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Pigeon::checkPigeonSpawnRules, RegisterSpawnPlacementsEvent.Operation.OR);
     }
 }

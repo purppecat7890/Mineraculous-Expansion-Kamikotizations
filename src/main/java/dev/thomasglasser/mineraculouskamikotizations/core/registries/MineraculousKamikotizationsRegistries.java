@@ -1,7 +1,6 @@
 package dev.thomasglasser.mineraculouskamikotizations.core.registries;
 
 import dev.thomasglasser.mineraculouskamikotizations.MineraculousKamikotizations;
-import dev.thomasglasser.mineraculouskamikotizations.world.entity.animal.Pigeon;
 import dev.thomasglasser.mineraculouskamikotizations.world.entity.animal.PigeonVariant;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceKey;

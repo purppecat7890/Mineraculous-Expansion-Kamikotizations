@@ -18,6 +18,7 @@ public class PigeonVariants {
     /// The default.
     public static final ResourceKey<PigeonVariant> TEMPERATE = create("temperate");
     public static final ResourceKey<PigeonVariant> COLD = create("cold");
+    public static final ResourceKey<PigeonVariant> WARM = create("warm");
 
     private static ResourceKey<PigeonVariant> create(String name) {
         return ResourceKey.create(MineraculousKamikotizationsRegistries.PIGEON_VARIANT, MineraculousKamikotizations.modLoc(name));
@@ -40,6 +41,7 @@ public class PigeonVariants {
 
         register(context, TEMPERATE, HolderSet.empty());
         register(context, COLD, biomes.getOrThrow(MineraculousKamikotizationsBiomeTags.SPAWNS_COLD_VARIANT_PIGEONS));
+        register(context, WARM, biomes.getOrThrow(MineraculousKamikotizationsBiomeTags.SPAWNS_WARM_VARIANT_PIGEONS));
     }
 
     /**

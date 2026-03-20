@@ -29,7 +29,6 @@ public class MineraculousKamikotizationsBiomeTagsProvider extends BiomeTagsProvi
                 .addTag(MineraculousKamikotizationsBiomeTags.SPAWNS_COLD_VARIANT_PIGEONS)
                 .addTag(MineraculousKamikotizationsBiomeTags.SPAWNS_WARM_VARIANT_PIGEONS)
                 .addTag(ConventionalBiomeTags.IS_PLAINS)
-                .addTag(ConventionalBiomeTags.IS_FOREST)
                 .addTag(ConventionalBiomeTags.IS_FLORAL);
     }
 }
